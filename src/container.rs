@@ -1,14 +1,20 @@
-use crate::articles::adapters::article_repository::ArticlesRepository;
+use crate::articles::adapters::persistence::{ArticleRepository, AuthorRepository};
 
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub struct Container {
-    pub articles_repository: ArticlesRepository,
+    pub article_repository: ArticleRepository,
+    pub author_repository: AuthorRepository,
 }
 
 impl Container {
-    pub fn load() -> Self {
+    pub fn new() -> Self {
         Self {
-            articles_repository: ArticlesRepository {},
+            article_repository: ArticleRepository {},
+            author_repository: AuthorRepository {},
         }
     }
+}
+
+pub fn get_container() -> Container {
+    Container::new()
 }

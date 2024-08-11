@@ -1,3 +1,4 @@
+//! Utility functions for registering the application's entry points.
 mod api;
 mod web;
 

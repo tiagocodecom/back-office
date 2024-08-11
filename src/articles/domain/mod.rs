@@ -1,3 +1,9 @@
-pub mod article;
-pub mod author;
-pub mod error;
+mod article;
+mod author;
+mod error;
+mod new_article;
+
+pub use article::*;
+pub use author::*;
+pub use error::*;
+pub use new_article::*;

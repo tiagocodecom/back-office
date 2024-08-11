@@ -1,19 +1,25 @@
+use uuid::Uuid;
+
 #[derive(Debug, Clone)]
 pub struct Author {
-    id: uuid::Uuid,
+    id: Uuid,
     first_name: String,
     last_name: String,
-    username: String,
+    nickname: String,
 }
 
 impl Author {
-    pub fn new(id: uuid::Uuid, first_name: String, last_name: String, username: String) -> Self {
+    pub fn new(id: Uuid, first_name: String, last_name: String, nickname: String) -> Self {
         Self {
             id,
             first_name,
             last_name,
-            username,
+            nickname,
         }
+    }
+
+    pub fn id(&self) -> &Uuid {
+        &self.id
     }
 
     pub fn get_full_name(&self) -> String {

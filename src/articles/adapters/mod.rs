@@ -1,2 +1,2 @@
-pub mod article_controller;
-pub mod article_repository;
+pub mod api;
+pub mod persistence;

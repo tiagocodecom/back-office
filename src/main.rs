@@ -2,10 +2,12 @@ use back_office::{Application, ConfigLoader};
 
 #[actix_web::main]
 async fn main() -> anyhow::Result<()> {
-    let configuration = ConfigLoader::from_dir().load()?;
-    let application = Application::build(configuration).await?;
+    let config = ConfigLoader::from_default_dir()?;
 
-    application.run_until_stopped().await?;
+    Application::build(config)
+        .await?
+        .run_until_stopped()
+        .await?;
 
     Ok(())
 }

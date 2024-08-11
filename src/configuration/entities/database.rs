@@ -1,9 +1,10 @@
+use secrecy::Secret;
 use serde_aux::field_attributes::deserialize_number_from_string;
 
 #[derive(serde::Deserialize, Clone)]
 pub struct DatabaseConfig {
     username: String,
-    password: secrecy::Secret<String>,
+    password: Secret<String>,
     #[serde(deserialize_with = "deserialize_number_from_string")]
     port: u16,
     host: String,
@@ -16,7 +17,7 @@ impl DatabaseConfig {
         &self.username
     }
 
-    pub fn password(&self) -> &secrecy::Secret<String> {
+    pub fn password(&self) -> &Secret<String> {
         &self.password
     }
 

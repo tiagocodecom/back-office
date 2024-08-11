@@ -6,4 +6,7 @@ pub struct ApplicationConfig {
     pub port: u16,
     pub host: String,
     pub base_url: String,
+    pub environment: String,
+    pub version: String,
+    pub name: String,
 }

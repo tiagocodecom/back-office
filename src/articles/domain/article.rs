@@ -1,8 +1,9 @@
-use crate::articles::domain::author::Author;
+use crate::articles::domain::Author;
+use uuid::Uuid;
 
 #[derive(Debug, Clone)]
 pub struct Article {
-    id: uuid::Uuid,
+    id: Uuid,
     author: Author,
     title: String,
     text: String,
@@ -12,13 +13,7 @@ pub struct Article {
 pub type ArticlesList = Vec<Article>;
 
 impl Article {
-    pub fn new(
-        id: uuid::Uuid,
-        author: Author,
-        title: String,
-        text: String,
-        created_at: String,
-    ) -> Self {
+    pub fn new(id: Uuid, author: Author, title: String, text: String, created_at: String) -> Self {
         Self {
             id,
             author,
@@ -26,5 +21,25 @@ impl Article {
             text,
             created_at,
         }
+    }
+
+    pub fn id(&self) -> &Uuid {
+        &self.id
+    }
+
+    pub fn author_id(&self) -> &Uuid {
+        &self.author.id()
+    }
+
+    pub fn title(&self) -> &str {
+        &self.title
+    }
+
+    pub fn text(&self) -> &str {
+        &self.text
+    }
+
+    pub fn created_at(&self) -> &str {
+        &self.created_at
     }
 }
