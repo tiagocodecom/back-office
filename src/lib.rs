@@ -1,9 +1,6 @@
-mod application;
 pub mod articles;
-pub mod configuration;
-pub mod container;
-pub mod routes;
-pub mod startup;
+pub mod framework;
 
-pub use application::Application;
-pub use configuration::loader::ConfigLoader;
+pub use framework::application::Application;
+pub use framework::configuration::loader::ConfigLoader;
+pub use framework::container::Container;

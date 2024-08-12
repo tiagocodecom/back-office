@@ -1,6 +1,6 @@
 use crate::articles::application::services::save_article_service;
 use crate::articles::domain::NewArticle;
-use crate::container::Container;
+use crate::framework::container::Container;
 use actix_web::web::{Data, Json};
 use actix_web::HttpResponse;
 use uuid::Uuid;

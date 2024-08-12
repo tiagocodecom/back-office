@@ -1,4 +1,4 @@
-use crate::configuration::entities::config::Config;
+use crate::framework::configuration::entities::config::Config;
 use config::Config as ConfigRepository;
 use config::File;
 use std::env;
@@ -17,7 +17,7 @@ impl ConfigLoader {
     ///
     /// # Arguments
     /// * `directory` - Path to the configuration directory (from the project root).
-    fn from(directory: String) -> Self {
+    pub fn new(directory: String) -> Self {
         Self { directory }
     }
 
@@ -27,13 +27,13 @@ impl ConfigLoader {
     /// # Arguments
     /// * `directory` - Path to the configuration directory (from the project root).
     pub fn from_custom_dir(directory: String) -> anyhow::Result<Config> {
-        Self::from(directory).load()
+        Self::new(directory).load()
     }
 
     /// Creates a `ConfigLoader` from the default directory `config` located
     /// at the root of the project, and deserializes the configuration data.
     pub fn from_default_dir() -> anyhow::Result<Config> {
-        Self::from("config".to_string()).load()
+        Self::new("config".to_string()).load()
     }
 
     /// Resolves the full path to the configuration directory.

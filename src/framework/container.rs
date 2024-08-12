@@ -1,6 +1,6 @@
 use crate::articles::adapters::persistence::ArticleRepository;
-use crate::configuration::entities::config::Config;
-use crate::startup::database::get_connection_pool;
+use crate::framework::configuration::entities::config::Config;
+use crate::framework::database::Database;
 use std::sync::Arc;
 
 #[derive(Clone)]
@@ -10,10 +10,10 @@ pub struct Container {
 
 impl Container {
     pub fn new(config: Config) -> Self {
-        let db_pool = get_connection_pool(&config.database);
+        let connection_pool = Arc::new(Database::new_pool(&config.database));
 
         Self {
-            article_repository: ArticleRepository::new(Arc::new(db_pool)),
+            article_repository: ArticleRepository::new(connection_pool.clone()),
         }
     }
 }
