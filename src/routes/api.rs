@@ -1,10 +1,11 @@
 use crate::articles::adapters as articles_adapters;
-use actix_web::web::{self, get, post};
+use actix_web::web::{get, post, resource, ServiceConfig};
+use actix_web::HttpResponse;
 
-pub fn api_routes(cfg: &mut web::ServiceConfig) {
+pub fn api_routes(cfg: &mut ServiceConfig) {
     cfg.service(
-        web::scope("/api")
-            .route("/articles", get().to(articles_adapters::api::get_articles))
-            .route("/articles", post().to(articles_adapters::api::save_article)),
+        resource("/articles")
+            .route(post().to(articles_adapters::web::save_article))
+            .route(get().to(HttpResponse::Ok)),
     );
 }

@@ -1,13 +1,9 @@
-use crate::articles::application::ports::ForSavingArticle;
+use crate::articles::application::ports::SaveArticleUseCase;
 use crate::articles::domain::{Article, NewArticle};
-use sqlx::PgPool;
 
-pub async fn execute(
-    db_pool: &PgPool,
-    driven_port: &impl ForSavingArticle,
-    article: &NewArticle,
-) -> anyhow::Result<Article>
+pub async fn execute<T>(driven_port: &T, article: &NewArticle) -> anyhow::Result<Article>
 where
+    T: SaveArticleUseCase,
 {
-    driven_port.save_article(db_pool, article).await
+    driven_port.save_article(article).await
 }

@@ -6,19 +6,25 @@ pub struct Article {
     id: Uuid,
     author: Author,
     title: String,
-    text: String,
+    content: String,
     created_at: String,
 }
 
 pub type ArticlesList = Vec<Article>;
 
 impl Article {
-    pub fn new(id: Uuid, author: Author, title: String, text: String, created_at: String) -> Self {
+    pub fn new(
+        id: Uuid,
+        author: Author,
+        title: String,
+        content: String,
+        created_at: String,
+    ) -> Self {
         Self {
             id,
             author,
             title,
-            text,
+            content,
             created_at,
         }
     }
@@ -35,8 +41,8 @@ impl Article {
         &self.title
     }
 
-    pub fn text(&self) -> &str {
-        &self.text
+    pub fn content(&self) -> &str {
+        &self.content
     }
 
     pub fn created_at(&self) -> &str {

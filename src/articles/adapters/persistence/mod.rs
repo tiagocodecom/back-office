@@ -1,5 +1,3 @@
-mod article_repository;
-mod author_repository;
+mod articles_repository;
 
-pub use article_repository::ArticleRepository;
-pub use author_repository::AuthorRepository;
+pub use articles_repository::ArticleRepository;

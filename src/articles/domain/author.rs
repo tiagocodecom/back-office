@@ -21,8 +21,4 @@ impl Author {
     pub fn id(&self) -> &Uuid {
         &self.id
     }
-
-    pub fn get_full_name(&self) -> String {
-        String::from(format!("{} {}", &self.first_name, &self.last_name))
-    }
 }

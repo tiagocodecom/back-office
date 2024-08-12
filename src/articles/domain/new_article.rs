@@ -3,15 +3,15 @@ use uuid::Uuid;
 pub struct NewArticle {
     author_id: Uuid,
     title: String,
-    text: String,
+    content: String,
 }
 
 impl NewArticle {
-    pub fn new(author_id: Uuid, title: String, text: String) -> Self {
+    pub fn new(author_id: Uuid, title: String, content: String) -> Self {
         Self {
             author_id,
             title,
-            text,
+            content,
         }
     }
 
@@ -23,7 +23,7 @@ impl NewArticle {
         &self.title
     }
 
-    pub fn text(&self) -> &str {
-        &self.text
+    pub fn content(&self) -> &str {
+        &self.content
     }
 }
