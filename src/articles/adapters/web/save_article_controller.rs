@@ -21,6 +21,14 @@ impl From<NewArticleRequest> for NewArticle {
     }
 }
 
+#[tracing::instrument(
+    name = "Save new article request",
+    skip(container, request),
+    fields(
+        author_id = %request.author_id,
+        title = %request.title
+    )
+)]
 pub async fn save_article(
     container: Data<Container>,
     request: Json<NewArticleRequest>,

@@ -18,9 +18,9 @@ impl ArticleRepository {
         Self { db_pool }
     }
 }
-
 #[async_trait(?Send)]
 impl SaveArticleUseCase for ArticleRepository {
+    #[tracing::instrument(name = "Store article in the database", skip(self, article))]
     async fn save_article(&self, article: &NewArticle) -> anyhow::Result<Uuid> {
         let article_id = Uuid::new_v4();
         let created_at = Utc::now();
@@ -34,8 +34,7 @@ impl SaveArticleUseCase for ArticleRepository {
             &created_at,
         );
 
-        let rows_affected = self
-            .db_pool
+        self.db_pool
             .execute(query)
             .await
             .context("Failed to save the article")?;

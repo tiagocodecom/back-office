@@ -1,12 +1,26 @@
 use back_office::framework::configuration::entities::config::Config;
 use back_office::framework::configuration::entities::database::DatabaseConfig;
 use back_office::framework::database::Database;
+use back_office::framework::telemetry::{get_telemetry_subscriber, init_telemetry_subscriber};
 use back_office::{Application, ConfigLoader};
+use once_cell::sync::Lazy;
 use reqwest::redirect::Policy;
 use reqwest::{Client, Response};
 use serde_json::Value;
 use sqlx::{migrate, Connection, Executor, PgConnection, PgPool};
+use std::env::var;
+use std::io::{sink, stdout};
 use uuid::Uuid;
+
+static TRACING: Lazy<()> = Lazy::new(|| {
+    if var("TEST_LOG").is_ok() {
+        let subscriber = get_telemetry_subscriber("test".into(), "info".into(), stdout);
+        init_telemetry_subscriber(subscriber).unwrap();
+    } else {
+        let subscriber = get_telemetry_subscriber("test".into(), "info".into(), sink);
+        init_telemetry_subscriber(subscriber).unwrap();
+    };
+});
 
 /// A struct representing the test application.
 pub struct TestApplication {
@@ -27,6 +41,8 @@ impl TestApplication {
 }
 
 pub async fn spawn_test_app() -> TestApplication {
+    Lazy::force(&TRACING);
+
     let config = spawn_test_app_config();
     let http_client = spawn_test_http_client();
     let connection_pool = spawn_test_database_pool(&config.database).await;
