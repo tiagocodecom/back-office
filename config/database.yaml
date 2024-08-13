@@ -1,0 +1,7 @@
+database:
+  username: santiagomm1997
+  password: smm0301LDS*_db
+  host: postgres
+  port: 5432
+  db_name: tiagocode_db
+  require_ssl: false
