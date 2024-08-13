@@ -9,7 +9,7 @@ pub struct Container {
 }
 
 impl Container {
-    pub fn new(config: Config) -> Self {
+    pub fn new(config: &Config) -> Self {
         let connection_pool = Arc::new(Database::new_pool(&config.database));
 
         Self {

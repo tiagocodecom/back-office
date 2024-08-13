@@ -8,7 +8,7 @@ pub struct DatabaseConfig {
     #[serde(deserialize_with = "deserialize_number_from_string")]
     port: u16,
     host: String,
-    db_name: String,
+    pub db_name: String,
     require_ssl: bool,
 }
 

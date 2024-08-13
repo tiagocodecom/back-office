@@ -61,7 +61,7 @@ impl ConfigLoader {
 
         config_data
             .try_deserialize::<Config>()
-            .map_err(|e| anyhow::anyhow!("Failed deserializing the configuration: {}", e))
+            .map_err(|e| anyhow::anyhow!("Failed to deserialize the configuration: {}", e))
     }
 }
 

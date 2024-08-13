@@ -16,7 +16,7 @@ pub struct Application {
 impl Application {
     /// Initializes the `Application` by configuring the server and its dependencies.
     /// Returns an `Application` instance if the server is successfully configured.
-    pub async fn from(config: Config) -> anyhow::Result<Self> {
+    pub async fn from(config: &Config) -> anyhow::Result<Self> {
         let address = format!("{}:{}", &config.application.host, &config.application.port);
         let listener = TcpListener::bind(address.clone())?;
         let port = listener.local_addr()?.port();
@@ -30,6 +30,17 @@ impl Application {
     /// Starts the server and blocks the current thread until the server is stopped.
     /// This method runs asynchronously and will only return when the server is halted.
     pub async fn run_server(self) -> Result<(), std::io::Error> {
-        self.server.await
+        println!("Server running on port: {}", self.port().clone());
+        self.server().await
+    }
+
+    /// Returns the port on which the server is running.
+    pub fn port(&self) -> u16 {
+        self.port
+    }
+
+    /// Returns a reference to the server instance.
+    pub fn server(self) -> Server {
+        self.server
     }
 }

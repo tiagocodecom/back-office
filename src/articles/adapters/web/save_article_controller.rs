@@ -7,14 +7,14 @@ use uuid::Uuid;
 
 #[derive(serde::Deserialize)]
 pub struct NewArticleRequest {
-    // pub author_id: Uuid,
+    pub author_id: Uuid,
     pub title: String,
     pub content: String,
 }
 
 impl From<NewArticleRequest> for NewArticle {
     fn from(value: NewArticleRequest) -> Self {
-        Self::new(Uuid::new_v4(), value.title, value.content)
+        Self::new(value.author_id, value.title, value.content)
     }
 }
 
