@@ -1,0 +1,179 @@
+use crate::framework::settings::directory_reader::{DefaultDirectoryReader, DirectoryReader};
+use crate::framework::settings::entities::config::Config as ConfigEntity;
+use crate::framework::settings::entities::environment::Environment;
+use crate::framework::settings::settings_directory::SettingsDirectory;
+use crate::framework::settings::settings_file_filter::SettingsFileFilter;
+use crate::framework::settings::settings_file_filter::TomlSettingsFileFilter;
+use config::{Config, File};
+use std::path::PathBuf;
+
+pub enum SettingsOverwrite {
+    Enabled,
+    Disabled,
+}
+
+pub struct SettingsLoader<R: DirectoryReader, F: SettingsFileFilter> {
+    reader: R,
+    filter: F,
+    files: Vec<PathBuf>,
+    overwrites: SettingsOverwrite,
+    environment: Environment,
+    directory: SettingsDirectory,
+}
+
+impl Default for SettingsLoader<DefaultDirectoryReader, TomlSettingsFileFilter> {
+    fn default() -> Self {
+        Self::new(
+            SettingsDirectory::new("config".into()).unwrap(),
+            SettingsOverwrite::Enabled,
+            Environment::default(),
+            DefaultDirectoryReader::new(),
+            TomlSettingsFileFilter::new(),
+        )
+    }
+}
+
+impl<R: DirectoryReader, F: SettingsFileFilter> SettingsLoader<R, F> {
+    pub fn new(
+        directory: SettingsDirectory,
+        overwrites: SettingsOverwrite,
+        environment: Environment,
+        reader: R,
+        filter: F,
+    ) -> Self {
+        Self {
+            reader,
+            filter,
+            directory,
+            environment,
+            overwrites,
+            files: vec![],
+        }
+    }
+
+    pub fn directory(&self) -> &SettingsDirectory {
+        &self.directory
+    }
+
+    pub fn change_directory(&mut self, directory: &str) -> &mut Self {
+        self.directory = SettingsDirectory::new(directory).unwrap();
+        self
+    }
+
+    fn is_overwrite_enabled(&self) -> bool {
+        matches!(self.overwrites, SettingsOverwrite::Enabled)
+    }
+
+    pub fn disable_overwrites(&mut self) -> &mut Self {
+        self.overwrites = SettingsOverwrite::Disabled;
+        self
+    }
+
+    pub fn load_files(&mut self) -> &mut Self {
+        self.files
+            .extend([self.base_files(), self.overwrites_files()].concat());
+        self
+    }
+
+    fn overwrites_files(&self) -> Vec<PathBuf> {
+        if !self.is_overwrite_enabled() {
+            return vec![];
+        }
+
+        let directory = self.directory.join(&self.environment.as_str());
+        let entries = self.reader.read_directory(&directory).unwrap();
+
+        self.filter.filter_config_files(entries)
+    }
+
+    fn base_files(&self) -> Vec<PathBuf> {
+        let directory = &self.directory().as_ref();
+        let entries = self.reader.read_directory(directory).unwrap();
+
+        self.filter.filter_config_files(entries)
+    }
+
+    pub fn deserialize(&self) -> anyhow::Result<ConfigEntity> {
+        self.files
+            .iter()
+            .fold(Config::builder(), |config, file| {
+                config.add_source(File::from(file.clone()).required(false))
+            })
+            .build()?
+            .try_deserialize::<ConfigEntity>()
+            .map_err(|e| anyhow::anyhow!("Failed to deserialize the configuration: {}", e))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_should_point_to_the_project_root_config_directory_by_default() {
+        let loader = SettingsLoader::default();
+        assert!(loader.directory().to_string().contains("config"));
+    }
+
+    #[test]
+    fn it_should_allow_to_override_the_config_directory() {
+        let mut loader = SettingsLoader::default();
+
+        assert!(loader
+            .change_directory("tests/fixtures/config")
+            .directory()
+            .to_string()
+            .contains("tests/fixtures/config"),);
+    }
+
+    #[test]
+    #[should_panic]
+    fn it_should_return_error_when_config_directory_does_not_exists() {
+        let config_directory = SettingsDirectory::new("non-existing-dir");
+        assert!(config_directory.is_err());
+
+        let mut config_loader = SettingsLoader::default();
+        config_loader.change_directory("non-existing-dir");
+    }
+
+    #[test]
+    fn it_should_deserialize_the_configuration_files() {
+        let config = SettingsLoader::default()
+            .change_directory("tests/fixtures/config")
+            .disable_overwrites()
+            .load_files()
+            .deserialize()
+            .unwrap();
+
+        assert_eq!(config.application.environment, "testing");
+        assert_eq!(config.application.name, "tests-back-office");
+    }
+
+    #[test]
+    fn it_might_merge_the_configuration_with_data_from_config_dev_directory_by_default() {
+        let config = SettingsLoader::default()
+            .change_directory("tests/fixtures/config")
+            .load_files()
+            .deserialize()
+            .unwrap();
+
+        assert_eq!(config.application.name, "overwritten-tests-back-office");
+        assert_eq!(config.application.environment, "testing");
+        assert_eq!(config.application.version, "1.0.0");
+    }
+
+    #[test]
+    fn it_should_merge_the_configuration_with_data_from_config_prod_if_the_env_is_specified() {
+        std::env::set_var("APP__ENVIRONMENT", "production");
+
+        let config = SettingsLoader::default()
+            .change_directory("tests/fixtures/config")
+            .load_files()
+            .deserialize()
+            .unwrap();
+
+        assert_eq!(config.application.name, "prod-overwritten-tests");
+        assert_eq!(config.application.environment, "testing");
+        assert_eq!(config.application.version, "1.0.0");
+    }
+}

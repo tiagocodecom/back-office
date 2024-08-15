@@ -1,4 +1,4 @@
-use crate::framework::configuration::entities::config::Config;
+use crate::framework::settings::entities::config::Config;
 use crate::framework::container::Container;
 use crate::framework::server::run;
 use actix_web::dev::Server;

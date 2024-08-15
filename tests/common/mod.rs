@@ -1,8 +1,8 @@
-use back_office::framework::configuration::entities::config::Config;
-use back_office::framework::configuration::entities::database::DatabaseConfig;
 use back_office::framework::database::Database;
+use back_office::framework::settings::entities::config::Config;
+use back_office::framework::settings::entities::database::DatabaseConfig;
 use back_office::framework::telemetry::{get_telemetry_subscriber, init_telemetry_subscriber};
-use back_office::{Application, ConfigLoader};
+use back_office::{Application, SettingsLoader};
 use once_cell::sync::Lazy;
 use reqwest::redirect::Policy;
 use reqwest::{Client, Response};
@@ -63,7 +63,11 @@ pub async fn spawn_test_app() -> TestApplication {
 /// so that the tests do not interfere with each other.
 fn spawn_test_app_config() -> Config {
     let config = {
-        let mut config = ConfigLoader::from_custom_dir("tests/fixtures/config".into()).unwrap();
+        let mut config = SettingsLoader::default()
+            .load_files()
+            .deserialize()
+            .unwrap();
+
         config.database.db_name = Uuid::new_v4().to_string();
         config.application.port = 0;
         config

@@ -1,3 +1,5 @@
 .env
 .idea
 /target
+config/development/*.config.toml
+config/production/*.config.toml

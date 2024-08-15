@@ -14,14 +14,23 @@ impl Environment {
     }
 }
 
+impl Default for Environment {
+    fn default() -> Self {
+        let environment: Environment = std::env::var("APP__ENVIRONMENT")
+            .unwrap_or_else(|_| "development".into())
+            .try_into()
+            .expect("Failed to parse APP_ENVIRONMENT.");
+
+        environment
+    }
+}
+
 impl TryFrom<String> for Environment {
     type Error = String;
 
     fn try_from(value: String) -> Result<Self, Self::Error> {
         match value.to_lowercase().as_str() {
-            "local" => Ok(Self::Development),
-            "development" => Ok(Self::Development),
-            "testing" => Ok(Self::Testing),
+            "local" | "development" | "testing" => Ok(Self::Development),
             "production" => Ok(Self::Production),
             other => Err(format!("{} is not a supported environment", other)),
         }

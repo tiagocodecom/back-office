@@ -1,0 +1,7 @@
+[application]
+name = "name"
+version = "version"
+environment = "development"
+host = "host"
+port = 8080
+base_url = "base_url"

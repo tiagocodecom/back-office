@@ -1,4 +1,4 @@
-use crate::framework::configuration::entities::database::DatabaseConfig;
+use crate::framework::settings::entities::database::DatabaseConfig;
 use secrecy::ExposeSecret;
 use sqlx::postgres::{PgConnectOptions, PgPoolOptions, PgSslMode};
 use sqlx::PgPool;

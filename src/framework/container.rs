@@ -1,6 +1,6 @@
 use crate::articles::adapters::persistence::ArticleRepository;
-use crate::framework::configuration::entities::config::Config;
 use crate::framework::database::Database;
+use crate::framework::settings::entities::config::Config;
 use std::sync::Arc;
 
 #[derive(Clone)]
