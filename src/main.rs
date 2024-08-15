@@ -1,15 +1,16 @@
-use actix_web::{App, HttpResponse, HttpServer, Responder, web};
-use actix_web::http::header::ContentType;
+use back_office::framework::telemetry::{get_telemetry_subscriber, init_telemetry_subscriber};
+use back_office::{Application, SettingsLoader};
+use std::io::stdout;
 
 #[actix_web::main]
-async fn main() -> std::io::Result<()> {
+async fn main() -> anyhow::Result<()> {
+    let subscriber = get_telemetry_subscriber("back-office".into(), "info".into(), stdout);
+    init_telemetry_subscriber(subscriber)?;
 
-    HttpServer::new(|| {
-        App::new()
-            .route("/health-check", web::get().to(health_check))
-    }).bind(("0.0.0.0", 8080))?.run().await
-}
+    let config = SettingsLoader::default().load_files().deserialize()?;
+    let application = Application::from(&config).await?;
 
-async fn health_check() -> impl Responder {
-    HttpResponse::Ok().content_type(ContentType::html()).body("OK, Hello world!!!".to_string())
+    application.run_server().await?;
+
+    Ok(())
 }

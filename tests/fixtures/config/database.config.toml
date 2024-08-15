@@ -1,0 +1,7 @@
+[database]
+port = 5432
+host = "postgres"
+db_name = "db_name"
+username = "username"
+password = "password"
+require_ssl = true
