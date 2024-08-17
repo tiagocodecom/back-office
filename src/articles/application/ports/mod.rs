@@ -1,3 +1,2 @@
-mod saving_article_use_case;
-
-pub use saving_article_use_case::*;
+pub mod primary;
+pub mod secondary;

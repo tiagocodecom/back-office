@@ -1,4 +1,4 @@
-use crate::articles::adapters::persistence::ArticleRepository;
+use crate::articles::adapters::secondary::repository::ArticleRepository;
 use crate::framework::database::Database;
 use crate::framework::settings::entities::config::Config;
 use std::sync::Arc;

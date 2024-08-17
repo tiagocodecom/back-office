@@ -1,4 +1,4 @@
-use crate::articles::application::services::save_article_service;
+use crate::articles::application::services::CreateArticleService;
 use crate::articles::domain::NewArticle;
 use crate::framework::container::Container;
 use actix_web::web::{Data, Json};
@@ -38,9 +38,11 @@ pub async fn save_article(
         Err(err) => return HttpResponse::BadRequest().body(err.to_string()),
     }
 
-    let request = request.into_inner();
-    let results =
-        save_article_service::execute(&container.article_repository, &request.into()).await;
+    let results = CreateArticleService::execute_with_repository(
+        &container.article_repository,
+        &request.into_inner().into(),
+    )
+    .await;
 
     match results {
         Ok(article_id) => HttpResponse::Ok().body(article_id.to_string()),
