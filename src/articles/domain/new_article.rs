@@ -1,5 +1,6 @@
 use uuid::Uuid;
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct NewArticle {
     author_id: Uuid,
     title: String,

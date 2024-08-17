@@ -20,8 +20,7 @@ pub async fn get_article(
     container: Data<Container>,
     path: Path<GetArticleRequestPath>,
 ) -> HttpResponse {
-    let results =
-        GetArticleService::execute_with_repository(&container.article_repository, &path.id).await;
+    let results = GetArticleService::with_repository(&container.article_repository, &path.id).await;
 
     match results {
         Ok(article) => HttpResponse::Ok().json(article),

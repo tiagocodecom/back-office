@@ -14,6 +14,7 @@ path = "src/lib.rs"
 [dependencies]
 async-trait = { version = "0.1.81" }
 actix-web = { version = "4" }
+actix-files = { version = "0.6.6" }
 actix-web-flash-messages = { version = "0.4", features = ["cookies"] }
 actix-web-lab = { version = "0.20" }
 anyhow = { version = "1" }
@@ -22,7 +23,9 @@ base64 = { version = "0.22" }
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
 config = { version = "0.14.0", default-features = false, features = ["toml"] }
 fakeit = { version = "1.3.0" }
+handlebars = { version = "6.0.0", features = ["dir_source"] }
 log = { version = "0.4.21" }
+mockall = { version = "0.13.0" }
 mockall_double = { version = "0.3.1" }
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "cookies"] }
 secrecy = { version = "0.8", features = ["serde"] }

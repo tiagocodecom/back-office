@@ -13,10 +13,7 @@ impl<R: ForGettingArticle> GetArticleService<R> {
         Self { repository }
     }
 
-    pub async fn execute_with_repository(
-        repository: R,
-        article_id: &Uuid,
-    ) -> anyhow::Result<Article> {
+    pub async fn with_repository(repository: R, article_id: &Uuid) -> anyhow::Result<Article> {
         Self::new(repository).execute(article_id).await
     }
 }
