@@ -1,10 +1,9 @@
-use crate::articles::domain::Author;
 use uuid::Uuid;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Article {
     id: Uuid,
-    author: Author,
+    author_id: Uuid,
     title: String,
     content: String,
     created_at: String,
@@ -15,14 +14,14 @@ pub type ArticlesList = Vec<Article>;
 impl Article {
     pub fn new(
         id: Uuid,
-        author: Author,
+        author_id: Uuid,
         title: String,
         content: String,
         created_at: String,
     ) -> Self {
         Self {
             id,
-            author,
+            author_id,
             title,
             content,
             created_at,
@@ -34,7 +33,7 @@ impl Article {
     }
 
     pub fn author_id(&self) -> &Uuid {
-        &self.author.id()
+        &self.author_id
     }
 
     pub fn title(&self) -> &str {

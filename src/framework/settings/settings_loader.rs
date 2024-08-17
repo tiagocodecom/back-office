@@ -110,13 +110,13 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_should_point_to_the_project_root_config_directory_by_default() {
+    fn uses_project_root_config_directory_by_default() {
         let loader = SettingsLoader::default();
         assert!(loader.directory().to_string().contains("config"));
     }
 
     #[test]
-    fn it_should_allow_to_override_the_config_directory() {
+    fn allows_overriding_the_config_directory() {
         let mut loader = SettingsLoader::default();
 
         assert!(loader
@@ -128,7 +128,7 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn it_should_return_error_when_config_directory_does_not_exists() {
+    fn returns_error_if_config_directory_does_not_exist() {
         let config_directory = SettingsDirectory::new("non-existing-dir");
         assert!(config_directory.is_err());
 
@@ -137,7 +137,7 @@ mod tests {
     }
 
     #[test]
-    fn it_should_deserialize_the_configuration_files() {
+    fn deserializes_configuration_files_correctly() {
         let config = SettingsLoader::default()
             .change_directory("tests/fixtures/config")
             .disable_overwrites()
@@ -150,7 +150,7 @@ mod tests {
     }
 
     #[test]
-    fn it_might_merge_the_configuration_with_data_from_config_dev_directory_by_default() {
+    fn merges_with_dev_config_by_default() {
         let config = SettingsLoader::default()
             .change_directory("tests/fixtures/config")
             .load_files()
@@ -163,7 +163,7 @@ mod tests {
     }
 
     #[test]
-    fn it_should_merge_the_configuration_with_data_from_config_prod_if_the_env_is_specified() {
+    fn merges_with_prod_config_when_env_is_specified() {
         std::env::set_var("APP__ENVIRONMENT", "production");
 
         let config = SettingsLoader::default()

@@ -5,7 +5,7 @@ use back_office::framework::telemetry::{get_telemetry_subscriber, init_telemetry
 use back_office::{Application, SettingsLoader};
 use once_cell::sync::Lazy;
 use reqwest::redirect::Policy;
-use reqwest::{Client, Response};
+use reqwest::{Client, Method, Response};
 use serde_json::Value;
 use sqlx::{migrate, Connection, Executor, PgConnection, PgPool};
 use std::env::var;
@@ -30,13 +30,21 @@ pub struct TestApplication {
 }
 
 impl TestApplication {
-    pub async fn post_json(&self, path: &str, body: Value) -> Response {
+    pub async fn request_json(&self, method: Method, path: &str, body: Value) -> Response {
         self.http_client
-            .post(&format!("{}{}", self.address, path))
+            .request(method, &format!("{}{}", self.address, path))
             .json(&body)
             .send()
             .await
             .expect("Failed to execute request.")
+    }
+
+    pub async fn post_json(&self, path: &str, body: Value) -> Response {
+        self.request_json(Method::POST, path, body).await
+    }
+
+    pub async fn get_json(&self, path: &str, body: Value) -> Response {
+        self.request_json(Method::GET, path, body).await
     }
 }
 
