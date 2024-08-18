@@ -22,7 +22,7 @@ impl From<NewArticleRequest> for NewArticle {
 }
 
 #[tracing::instrument(
-    name = "Save new article request",
+    name = "Create article request",
     skip(container, request),
     fields(
         author_id = %request.author_id,
@@ -38,7 +38,7 @@ pub async fn save_article(
         Err(err) => return HttpResponse::BadRequest().body(err.to_string()),
     }
 
-    let results = CreateArticleService::execute_with_repository(
+    let results = CreateArticleService::with_repository(
         &container.article_repository,
         &request.into_inner().into(),
     )

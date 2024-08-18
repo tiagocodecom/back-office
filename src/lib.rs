@@ -1,6 +1,5 @@
 pub mod articles;
 pub mod framework;
-pub mod routes;
 
 pub use framework::application::Application;
 pub use framework::container::Container;

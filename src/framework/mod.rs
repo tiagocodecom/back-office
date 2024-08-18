@@ -2,6 +2,7 @@
 pub mod application;
 pub mod container;
 pub mod database;
-pub mod server;
+pub mod handlebars;
+pub mod routes;
 pub mod settings;
 pub mod telemetry;
