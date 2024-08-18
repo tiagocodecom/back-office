@@ -46,6 +46,14 @@ impl TestApplication {
     pub async fn get_json(&self, path: &str, body: Value) -> Response {
         self.request_json(Method::GET, path, body).await
     }
+
+    pub async fn get(&self, path: &str) -> Response {
+        self.http_client
+            .get(&format!("{}{}", self.address, path))
+            .send()
+            .await
+            .expect("Failed to execute request.")
+    }
 }
 
 pub async fn spawn_test_app() -> TestApplication {
