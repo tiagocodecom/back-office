@@ -1,6 +1,7 @@
-use crate::articles::domain::Article;
+use crate::articles::application::domain::Article;
+use serde::{Deserialize, Serialize};
 
-#[derive(serde::Deserialize, serde::Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct ShowArticleViewModel {
     pub id: String,
     pub title: String,

@@ -1,11 +1,11 @@
-use crate::articles::adapters::primary::web as articles_web;
+use crate::articles::adapters::driving::web_get_article_controller as web_get_article;
 use actix_web::web::{get, scope, ServiceConfig};
 use actix_web::HttpResponse;
 
 pub fn web_routes(cfg: &mut ServiceConfig) {
     cfg.service(
         scope("")
-            .route("/articles/{id}", get().to(articles_web::show_article))
+            .route("/articles/{id}", get().to(web_get_article::handle))
             .route("/health-check", get().to(HttpResponse::Ok)),
     );
 }

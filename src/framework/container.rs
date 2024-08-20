@@ -1,4 +1,4 @@
-use crate::articles::adapters::secondary::repository::ArticleRepository;
+use crate::articles::adapters::driven::ArticleRepository;
 use crate::framework::database::Database;
 use crate::framework::handlebars::init_handlebars_engine;
 use crate::framework::settings::entities::config::Config;
