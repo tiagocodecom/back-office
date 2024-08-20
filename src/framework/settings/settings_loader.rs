@@ -151,13 +151,15 @@ mod tests {
 
     #[test]
     fn merges_with_dev_config_by_default() {
+        std::env::set_var("APP__ENVIRONMENT", "development");
+
         let config = SettingsLoader::default()
             .change_directory("tests/fixtures/config")
             .load_files()
             .deserialize()
             .unwrap();
 
-        assert_eq!(config.application.name, "overwritten-tests-back-office");
+        assert_eq!(config.application.name, "dev-overwritten-tests");
         assert_eq!(config.application.environment, "testing");
         assert_eq!(config.application.version, "1.0.0");
     }

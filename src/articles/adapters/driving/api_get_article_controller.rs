@@ -16,10 +16,7 @@ pub struct GetArticleRequestPath {
         article_id = %path.id,
     )
 )]
-pub async fn get_article(
-    container: Data<Container>,
-    path: Path<GetArticleRequestPath>,
-) -> HttpResponse {
+pub async fn handle(container: Data<Container>, path: Path<GetArticleRequestPath>) -> HttpResponse {
     let results = GetArticleService::with_repository(&container.article_repository, &path.id).await;
 
     match results {

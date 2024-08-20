@@ -1,12 +1,13 @@
+use crate::articles::application::domain::NewArticle;
 use crate::articles::application::services::CreateArticleService;
-use crate::articles::domain::NewArticle;
 use crate::framework::container::Container;
 use actix_web::web::{Data, Json};
 use actix_web::HttpResponse;
+use serde::Deserialize;
 use uuid::Uuid;
 use validator::Validate;
 
-#[derive(validator::Validate, serde::Deserialize)]
+#[derive(Validate, Deserialize)]
 pub struct NewArticleRequest {
     pub author_id: Uuid,
     #[validate(length(min = 10))]
@@ -25,14 +26,11 @@ impl From<NewArticleRequest> for NewArticle {
     name = "Create article request",
     skip(container, request),
     fields(
-        author_id = %request.author_id,
-        title = %request.title
+        title = %request.title,
+        author_id = %request.author_id
     )
 )]
-pub async fn save_article(
-    container: Data<Container>,
-    request: Json<NewArticleRequest>,
-) -> HttpResponse {
+pub async fn handle(container: Data<Container>, request: Json<NewArticleRequest>) -> HttpResponse {
     match request.validate() {
         Ok(_) => (),
         Err(err) => return HttpResponse::BadRequest().body(err.to_string()),

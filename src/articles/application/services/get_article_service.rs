@@ -1,14 +1,14 @@
-use crate::articles::application::ports::primary::GetArticleUseCase;
-use crate::articles::application::ports::secondary::ForGettingArticle;
-use crate::articles::domain::Article;
+use crate::articles::application::domain::Article;
+use crate::articles::application::ports::driven::FetchArticlePort;
+use crate::articles::application::ports::driving::GetArticleUseCase;
 use async_trait::async_trait;
 use uuid::Uuid;
 
-pub struct GetArticleService<R: ForGettingArticle> {
+pub struct GetArticleService<R: FetchArticlePort> {
     repository: R,
 }
 
-impl<R: ForGettingArticle> GetArticleService<R> {
+impl<R: FetchArticlePort> GetArticleService<R> {
     pub fn new(repository: R) -> Self {
         Self { repository }
     }
@@ -19,7 +19,7 @@ impl<R: ForGettingArticle> GetArticleService<R> {
 }
 
 #[async_trait(?Send)]
-impl<R: ForGettingArticle> GetArticleUseCase for GetArticleService<R> {
+impl<R: FetchArticlePort> GetArticleUseCase for GetArticleService<R> {
     async fn execute(&self, article_id: &Uuid) -> anyhow::Result<Article> {
         self.repository.get_by_id(article_id).await
     }
