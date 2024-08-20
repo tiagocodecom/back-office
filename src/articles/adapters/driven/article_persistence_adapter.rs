@@ -1,5 +1,5 @@
-use crate::articles::application::ports::secondary::{ForCreatingArticle, ForGettingArticle};
-use crate::articles::domain::{Article, NewArticle};
+use crate::articles::application::domain::{Article, NewArticle};
+use crate::articles::application::ports::driven::{FetchArticlePort, StoreArticlePort};
 use anyhow::Context;
 use async_trait::async_trait;
 use chrono::Utc;
@@ -20,7 +20,7 @@ impl ArticleRepository {
 }
 
 #[async_trait(?Send)]
-impl ForCreatingArticle for &ArticleRepository {
+impl StoreArticlePort for &ArticleRepository {
     #[tracing::instrument(name = "Store article in the database", skip(self, article))]
     async fn create(&self, article: &NewArticle) -> anyhow::Result<Uuid> {
         let article_id = Uuid::new_v4();
@@ -45,7 +45,7 @@ impl ForCreatingArticle for &ArticleRepository {
 }
 
 #[async_trait(?Send)]
-impl ForGettingArticle for &ArticleRepository {
+impl FetchArticlePort for &ArticleRepository {
     #[tracing::instrument(name = "Fetch article from the database", skip(self, article_id))]
     async fn get_by_id(&self, article_id: &Uuid) -> anyhow::Result<Article> {
         let query = query!(

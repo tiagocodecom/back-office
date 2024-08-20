@@ -1,14 +1,14 @@
-use crate::articles::application::ports::primary::CreateArticleUseCase;
-use crate::articles::application::ports::secondary::ForCreatingArticle;
-use crate::articles::domain::NewArticle;
+use crate::articles::application::domain::NewArticle;
+use crate::articles::application::ports::driven::StoreArticlePort;
+use crate::articles::application::ports::driving::CreateArticleUseCase;
 use async_trait::async_trait;
 use uuid::Uuid;
 
-pub struct CreateArticleService<R: ForCreatingArticle> {
+pub struct CreateArticleService<R: StoreArticlePort> {
     repository: R,
 }
 
-impl<R: ForCreatingArticle> CreateArticleService<R> {
+impl<R: StoreArticlePort> CreateArticleService<R> {
     pub fn new(repository: R) -> Self {
         Self { repository }
     }
@@ -19,7 +19,7 @@ impl<R: ForCreatingArticle> CreateArticleService<R> {
 }
 
 #[async_trait(?Send)]
-impl<R: ForCreatingArticle> CreateArticleUseCase for CreateArticleService<R> {
+impl<R: StoreArticlePort> CreateArticleUseCase for CreateArticleService<R> {
     async fn execute(&self, article: &NewArticle) -> anyhow::Result<Uuid> {
         self.repository.create(article).await
     }
@@ -28,13 +28,13 @@ impl<R: ForCreatingArticle> CreateArticleUseCase for CreateArticleService<R> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::articles::application::ports::secondary::MockForCreatingArticle;
-    use crate::articles::domain::NewArticle;
+    use crate::articles::application::domain::NewArticle;
+    use crate::articles::application::ports::driven::MockStoreArticlePort;
     use mockall::predicate::*;
 
     #[tokio::test]
     async fn create_article_returns_expected_uuid() {
-        let mut repository_mock = MockForCreatingArticle::new();
+        let mut repository_mock = MockStoreArticlePort::new();
         let article_id = Uuid::new_v4();
         let new_article = NewArticle::new(
             Uuid::new_v4(),
@@ -56,7 +56,7 @@ mod tests {
 
     #[tokio::test]
     async fn create_article_returns_error_failure() {
-        let mut mock = MockForCreatingArticle::new();
+        let mut mock = MockStoreArticlePort::new();
         let new_article = NewArticle::new(
             Uuid::new_v4(),
             String::from("What is Lorem Ipsum?"),

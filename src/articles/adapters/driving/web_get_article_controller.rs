@@ -1,12 +1,14 @@
-use crate::articles::adapters::secondary::presenter::show_article_presenter::ShowArticlePresenter;
+use crate::articles::adapters::driven::ShowArticlePresenter;
 use crate::articles::application::services::GetArticleService;
 use crate::framework::container::Container;
 use actix_web::web::{Data, Html, Path};
 use actix_web::Responder;
+use serde::Deserialize;
 use uuid::Uuid;
+use validator::Validate;
 
-#[derive(validator::Validate, serde::Deserialize)]
-pub struct ShowArticleRequestPath {
+#[derive(Validate, Deserialize)]
+pub struct ShowArticlePath {
     id: Uuid,
 }
 
@@ -17,10 +19,7 @@ pub struct ShowArticleRequestPath {
         article_id = %path.id,
     )
 )]
-pub async fn show_article(
-    container: Data<Container>,
-    path: Path<ShowArticleRequestPath>,
-) -> impl Responder {
+pub async fn handle(container: Data<Container>, path: Path<ShowArticlePath>) -> impl Responder {
     let result = GetArticleService::with_repository(&container.article_repository, &path.id).await;
 
     match result {

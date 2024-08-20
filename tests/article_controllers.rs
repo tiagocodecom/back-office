@@ -2,7 +2,7 @@ extern crate fakeit;
 
 mod common;
 
-use back_office::articles::domain::Article;
+use back_office::articles::application::domain::Article;
 use common::spawn_test_app;
 use fakeit::unique::uuid_v4;
 use fakeit::words::{paragraph, sentence};
