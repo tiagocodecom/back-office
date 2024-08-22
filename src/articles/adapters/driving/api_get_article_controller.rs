@@ -1,7 +1,8 @@
-use crate::articles::application::services::GetArticleService;
+use crate::articles::domain::RenderOutput;
+use crate::articles::services::GetArticleService;
 use crate::framework::container::Container;
 use actix_web::web::{Data, Path};
-use actix_web::HttpResponse;
+use actix_web::{HttpResponse, Responder};
 use uuid::Uuid;
 
 #[derive(validator::Validate, serde::Deserialize)]
@@ -16,11 +17,20 @@ pub struct GetArticleRequestPath {
         article_id = %path.id,
     )
 )]
-pub async fn handle(container: Data<Container>, path: Path<GetArticleRequestPath>) -> HttpResponse {
-    let results = GetArticleService::with_repository(&container.article_repository, &path.id).await;
+pub async fn handle(
+    container: Data<Container<'_>>,
+    path: Path<GetArticleRequestPath>,
+) -> impl Responder {
+    let repository = &container.article_postgres_repository;
+    let presenter = &container.article_json_presenter;
 
-    match results {
-        Ok(article) => HttpResponse::Ok().json(article),
-        Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
+    let result = GetArticleService::new(repository, presenter)
+        .execute(path.id)
+        .await
+        .unwrap();
+
+    match result {
+        RenderOutput::Json(json) => HttpResponse::Ok().json(json),
+        _ => HttpResponse::InternalServerError().finish(),
     }
 }
