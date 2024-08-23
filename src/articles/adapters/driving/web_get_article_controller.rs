@@ -1,5 +1,5 @@
-use crate::articles::adapters::driven::ShowArticlePresenter;
-use crate::articles::application::services::GetArticleService;
+use crate::articles::domain::RenderOutput;
+use crate::articles::services::GetArticleService;
 use crate::framework::container::Container;
 use actix_web::web::{Data, Html, Path};
 use actix_web::Responder;
@@ -8,7 +8,7 @@ use uuid::Uuid;
 use validator::Validate;
 
 #[derive(Validate, Deserialize)]
-pub struct ShowArticlePath {
+pub struct ShowArticleRequestPath {
     id: Uuid,
 }
 
@@ -19,11 +19,20 @@ pub struct ShowArticlePath {
         article_id = %path.id,
     )
 )]
-pub async fn handle(container: Data<Container>, path: Path<ShowArticlePath>) -> impl Responder {
-    let result = GetArticleService::with_repository(&container.article_repository, &path.id).await;
+pub async fn handle(
+    container: Data<Container<'_>>,
+    path: Path<ShowArticleRequestPath>,
+) -> impl Responder {
+    let repository = &container.article_postgres_repository;
+    let presenter = &container.article_html_presenter.clone();
+
+    let result = GetArticleService::new(repository, presenter)
+        .execute(path.id)
+        .await
+        .unwrap();
 
     match result {
-        Ok(article) => ShowArticlePresenter::with_view(&container.view, article),
-        Err(_) => Html::new("Article not found"),
+        RenderOutput::Html(html) => Html::new(html),
+        _ => Html::new("Internal server error"),
     }
 }

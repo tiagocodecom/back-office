@@ -1,5 +1,5 @@
-use crate::articles::application::domain::NewArticle;
-use crate::articles::application::services::CreateArticleService;
+use crate::articles::domain::NewArticle;
+use crate::articles::services::CreateArticleService;
 use crate::framework::container::Container;
 use actix_web::web::{Data, Json};
 use actix_web::HttpResponse;
@@ -30,14 +30,17 @@ impl From<NewArticleRequest> for NewArticle {
         author_id = %request.author_id
     )
 )]
-pub async fn handle(container: Data<Container>, request: Json<NewArticleRequest>) -> HttpResponse {
+pub async fn handle(
+    container: Data<Container<'_>>,
+    request: Json<NewArticleRequest>,
+) -> HttpResponse {
     match request.validate() {
         Ok(_) => (),
         Err(err) => return HttpResponse::BadRequest().body(err.to_string()),
     }
 
     let results = CreateArticleService::with_repository(
-        &container.article_repository,
+        &container.article_postgres_repository,
         &request.into_inner().into(),
     )
     .await;

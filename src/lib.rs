@@ -1,4 +1,5 @@
 pub mod articles;
+pub mod authentication;
 pub mod framework;
 
 pub use framework::application::Application;
