@@ -1,5 +1,5 @@
-use crate::articles::domain::RenderOutput;
-use crate::articles::ports::driven::{FetchArticlePort, RenderArticlePort};
+use crate::articles::get_article::{GetArticlePort, RenderArticlePort};
+use crate::articles::RenderOutput;
 use uuid::Uuid;
 
 pub struct GetArticleService<R, P> {
@@ -9,7 +9,7 @@ pub struct GetArticleService<R, P> {
 
 impl<R, P> GetArticleService<R, P>
 where
-    R: FetchArticlePort,
+    R: GetArticlePort,
     P: RenderArticlePort<Output = RenderOutput>,
 {
     pub fn new(repository: R, presenter: P) -> Self {

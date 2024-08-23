@@ -1,6 +1,4 @@
-use crate::articles::domain::NewArticle;
-use crate::articles::ports::driven::StoreArticlePort;
-use crate::articles::ports::driving::CreateArticleUseCase;
+use crate::articles::create_article::{CreateArticleUseCase, NewArticle, StoreArticlePort};
 use async_trait::async_trait;
 use uuid::Uuid;
 
@@ -28,8 +26,7 @@ impl<R: StoreArticlePort> CreateArticleUseCase for CreateArticleService<R> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::articles::domain::NewArticle;
-    use crate::articles::ports::driven::MockStoreArticlePort;
+    use crate::articles::create_article::MockStoreArticlePort;
     use mockall::predicate::*;
 
     #[tokio::test]
@@ -43,7 +40,7 @@ mod tests {
         );
 
         repository_mock
-            .expect_create()
+            .expect_create_article()
             .with(eq(new_article.clone()))
             .times(1)
             .returning(move |_| Ok(article_id.clone()));
@@ -63,7 +60,7 @@ mod tests {
             String::from("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
         );
 
-        mock.expect_create()
+        mock.expect_create_article()
             .with(eq(new_article.clone()))
             .times(1)
             .returning(|_| Err(anyhow::anyhow!("Failed to create article")));

@@ -1,4 +1,4 @@
-use crate::articles::domain::Article;
+use crate::articles::Article;
 use async_trait::async_trait;
 use uuid::Uuid;
 

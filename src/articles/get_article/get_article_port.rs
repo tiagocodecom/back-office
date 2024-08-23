@@ -1,10 +1,10 @@
-use crate::articles::domain::Article;
+use crate::articles::Article;
 use async_trait::async_trait;
 use uuid::Uuid;
 
 /// A trait for fetching an article by its unique ID.
 #[async_trait(?Send)]
-pub trait FetchArticlePort {
+pub trait GetArticlePort {
     /// Retrieves an `Article` by its `UUID`.
     ///
     /// # Parameters

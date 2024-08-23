@@ -1,24 +1,23 @@
-use crate::articles::adapters::driven::ArticleViewModel;
-use crate::articles::domain::{Article, RenderOutput};
-use crate::articles::ports::driven::RenderArticlePort;
+use crate::articles::get_article::{GetArticleViewModel, RenderArticlePort};
+use crate::articles::{Article, RenderOutput};
 use serde_json::json;
 
 /// A presenter that renders an `Article` into a specific output format.
 #[derive(Debug, Clone)]
-pub struct ArticleJsonPresenter {}
+pub struct GetArticleJsonPresenter {}
 
-impl ArticleJsonPresenter {
+impl GetArticleJsonPresenter {
     pub fn new() -> Self {
         Self {}
     }
 }
 
-impl RenderArticlePort for &ArticleJsonPresenter {
+impl RenderArticlePort for &GetArticleJsonPresenter {
     type Output = RenderOutput;
 
     /// Renders an `Article` as JSON within a `RenderOutput`.
     fn render_article(&self, article: Article) -> anyhow::Result<Self::Output> {
-        let article = ArticleViewModel::from(article);
+        let article = GetArticleViewModel::from(article);
         let output = RenderOutput::Json(json!(article));
 
         Ok(output)

@@ -1,5 +1,5 @@
-use crate::articles::domain::RenderOutput;
-use crate::articles::services::GetArticleService;
+use crate::articles::get_article::GetArticleService;
+use crate::articles::RenderOutput;
 use crate::framework::container::Container;
 use actix_web::web::{Data, Path};
 use actix_web::{HttpResponse, Responder};

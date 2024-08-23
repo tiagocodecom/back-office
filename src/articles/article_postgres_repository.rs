@@ -1,5 +1,6 @@
-use crate::articles::domain::{Article, NewArticle};
-use crate::articles::ports::driven::{FetchArticlePort, StoreArticlePort};
+use crate::articles::create_article::{NewArticle, StoreArticlePort};
+use crate::articles::get_article::GetArticlePort;
+use crate::articles::Article;
 use anyhow::Context;
 use async_trait::async_trait;
 use chrono::Utc;
@@ -45,7 +46,7 @@ impl StoreArticlePort for &PostgresArticleRepository {
 }
 
 #[async_trait(?Send)]
-impl FetchArticlePort for &PostgresArticleRepository {
+impl GetArticlePort for &PostgresArticleRepository {
     #[tracing::instrument(name = "Fetch article from the database", skip(self, article_id))]
     async fn get_article_by_id(&self, article_id: Uuid) -> anyhow::Result<Article> {
         let query = query!(

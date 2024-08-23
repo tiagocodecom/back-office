@@ -1,5 +1,4 @@
-use crate::articles::domain::NewArticle;
-use crate::articles::services::CreateArticleService;
+use crate::articles::create_article::{CreateArticleService, NewArticle};
 use crate::framework::container::Container;
 use actix_web::web::{Data, Json};
 use actix_web::HttpResponse;

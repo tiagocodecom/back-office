@@ -1,4 +1,4 @@
-use crate::articles::adapters::driving::web_get_article_controller as web_get_article;
+use crate::articles::get_article::get_article_web_controller as web_get_article;
 use crate::authentication::adapters::driving::web_get_form_controller as web_get_form;
 use actix_web::web::{get, scope, ServiceConfig};
 use actix_web::HttpResponse;

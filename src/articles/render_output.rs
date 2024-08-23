@@ -17,7 +17,7 @@ use serde_json::Value;
 ///
 /// ```rust
 /// use serde_json::json;
-/// use back_office::articles::domain::RenderOutput;
+/// use back_office::articles::RenderOutput;
 ///
 /// let json_output = RenderOutput::Json(json!({"title": "Example Article"}));
 /// let html_output = RenderOutput::Html("<h1>Example Article</h1>".into());

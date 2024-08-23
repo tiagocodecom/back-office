@@ -1,4 +1,4 @@
-use crate::articles::domain::Article;
+use crate::articles::Article;
 
 /// A trait for rendering an article into a specific output format.
 ///

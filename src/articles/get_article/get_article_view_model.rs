@@ -1,8 +1,8 @@
-use crate::articles::domain::Article;
+use crate::articles::Article;
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]
-pub struct ArticleViewModel {
+pub struct GetArticleViewModel {
     pub id: String,
     pub title: String,
     pub content: String,
@@ -12,7 +12,7 @@ pub struct ArticleViewModel {
     pub created_at: String,
 }
 
-impl From<Article> for ArticleViewModel {
+impl From<Article> for GetArticleViewModel {
     fn from(article: Article) -> Self {
         Self {
             id: article.id().to_string(),
