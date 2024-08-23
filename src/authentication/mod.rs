@@ -1,4 +1,4 @@
-pub mod adapters;
-pub mod domain;
-pub mod ports;
-pub mod services;
+mod render_output;
+
+pub mod get_login;
+pub use render_output::*;

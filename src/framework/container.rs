@@ -1,7 +1,6 @@
-use crate::articles::adapters::driven::{
-    ArticleHtmlPresenter, ArticleJsonPresenter, PostgresArticleRepository,
-};
-use crate::authentication::adapters::driven::{AuthFormHtmlPresenter, AuthFormMemoryRepository};
+use crate::articles::get_article::{GetArticleHtmlPresenter, GetArticleJsonPresenter};
+use crate::articles::PostgresArticleRepository;
+use crate::authentication::get_login::{GetLoginHtmlPresenter, GetLoginProvider};
 use crate::framework::database::Database;
 use crate::framework::handlebars::init_handlebars_engine;
 use crate::framework::settings::entities::config::Config;
@@ -10,10 +9,10 @@ use std::sync::Arc;
 #[derive(Clone)]
 pub struct Container<'a> {
     pub article_postgres_repository: PostgresArticleRepository,
-    pub article_html_presenter: ArticleHtmlPresenter<'a>,
-    pub article_json_presenter: ArticleJsonPresenter,
-    pub auth_form_memory_repository: AuthFormMemoryRepository,
-    pub auth_form_html_presenter: AuthFormHtmlPresenter<'a>,
+    pub article_html_presenter: GetArticleHtmlPresenter<'a>,
+    pub article_json_presenter: GetArticleJsonPresenter,
+    pub login_provider: GetLoginProvider,
+    pub login_html_presenter: GetLoginHtmlPresenter<'a>,
 }
 
 impl<'a> Container<'a> {
@@ -23,10 +22,10 @@ impl<'a> Container<'a> {
 
         Self {
             article_postgres_repository: PostgresArticleRepository::new(connection_pool),
-            article_html_presenter: ArticleHtmlPresenter::new(handlebars.clone()),
-            article_json_presenter: ArticleJsonPresenter::new(),
-            auth_form_memory_repository: AuthFormMemoryRepository::new(),
-            auth_form_html_presenter: AuthFormHtmlPresenter::new(handlebars.clone()),
+            article_html_presenter: GetArticleHtmlPresenter::new(handlebars.clone()),
+            article_json_presenter: GetArticleJsonPresenter::new(),
+            login_provider: GetLoginProvider::new(),
+            login_html_presenter: GetLoginHtmlPresenter::new(handlebars.clone()),
         }
     }
 }

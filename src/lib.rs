@@ -1,6 +1,7 @@
 pub mod articles;
 pub mod authentication;
 pub mod framework;
+pub mod users;
 
 pub use framework::application::Application;
 pub use framework::container::Container;
