@@ -8,7 +8,9 @@
 
 /// - `Html(String)`: Represents the article rendered as an HTML string. The string
 ///   contains the HTML markup for the article.
-
+/// - `Json(serde_json::Value)`: Represents the article rendered as a JSON value. The
+///
 pub enum RenderOutput {
     Html(String),
+    Json(serde_json::Value),
 }

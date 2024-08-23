@@ -1,6 +1,6 @@
-use crate::authentication::domain::email::Email;
-use crate::authentication::domain::password::Password;
-use crate::authentication::domain::username::Username;
+use crate::users::email::Email;
+use crate::users::password::Password;
+use crate::users::username::Username;
 use uuid::Uuid;
 
 pub struct User {

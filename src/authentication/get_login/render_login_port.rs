@@ -1,7 +1,7 @@
-use crate::authentication::domain::Form;
+use crate::authentication::get_login::Form;
 
 /// A trait for rendering forms using a template and context.
-pub trait RenderFormPort {
+pub trait RenderLoginPort {
     /// The type of the output produced by the rendering process.
     type Output;
 
@@ -15,5 +15,5 @@ pub trait RenderFormPort {
     /// An `anyhow::Result` that contains the rendered form as `Self::Output` if successful, or an error if rendering fails.
     ///
 
-    fn render_form(&self, form: Form) -> anyhow::Result<Self::Output>;
+    fn render_login(&self, form: Form) -> anyhow::Result<Self::Output>;
 }

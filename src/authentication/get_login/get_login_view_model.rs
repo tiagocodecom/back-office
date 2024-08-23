@@ -1,4 +1,4 @@
-use crate::authentication::domain::Form;
+use crate::authentication::get_login::Form;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
@@ -20,13 +20,13 @@ struct FormButtonViewModel {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct FormViewModel {
+pub struct GetLoginViewModel {
     title: String,
     fields: Vec<FormInputViewModel>,
     submit: FormButtonViewModel,
 }
 
-impl From<Form> for FormViewModel {
+impl From<Form> for GetLoginViewModel {
     fn from(value: Form) -> Self {
         let fields = value
             .fields
