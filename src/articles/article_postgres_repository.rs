@@ -1,4 +1,5 @@
 use crate::articles::create_article::{NewArticle, StoreArticlePort};
+use crate::articles::get_article::GetArticleError;
 use crate::articles::get_article::GetArticlePort;
 use crate::articles::Article;
 use anyhow::Context;
@@ -48,7 +49,7 @@ impl StoreArticlePort for &PostgresArticleRepository {
 #[async_trait(?Send)]
 impl GetArticlePort for &PostgresArticleRepository {
     #[tracing::instrument(name = "Fetch article from the database", skip(self, article_id))]
-    async fn get_article_by_id(&self, article_id: Uuid) -> anyhow::Result<Article> {
+    async fn get_article_by_id(&self, article_id: Uuid) -> Result<Article, GetArticleError> {
         let query = query!(
             "SELECT id, author_id, title, content, created_at FROM articles WHERE id = $1",
             &article_id,
@@ -58,7 +59,7 @@ impl GetArticlePort for &PostgresArticleRepository {
             .pool
             .fetch_optional(query)
             .await
-            .context("Failed to fetch the article")?
+            .map_err(|err| GetArticleError::Repository(err.to_string()))?
             .map(|row| {
                 Article::new(
                     row.get("id"),
@@ -69,6 +70,6 @@ impl GetArticlePort for &PostgresArticleRepository {
                 )
             });
 
-        result.ok_or_else(|| anyhow::anyhow!("Article not found"))
+        result.ok_or_else(|| GetArticleError::NotFound(article_id.to_string()))
     }
 }

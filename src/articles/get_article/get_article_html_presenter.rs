@@ -1,4 +1,4 @@
-use crate::articles::get_article::{GetArticleViewModel, RenderArticlePort};
+use crate::articles::get_article::{GetArticleError, GetArticleViewModel, RenderArticlePort};
 use crate::articles::{Article, RenderOutput};
 use handlebars::Handlebars;
 use std::sync::Arc;
@@ -19,10 +19,13 @@ impl RenderArticlePort for &GetArticleHtmlPresenter<'_> {
     type Output = RenderOutput;
 
     /// Renders an `Article` into HTML using the specified template.
-    fn render_article(&self, article: Article) -> anyhow::Result<Self::Output> {
+    fn render_article(&self, article: Article) -> Result<Self::Output, GetArticleError> {
         let article = GetArticleViewModel::from(article);
-        let output = RenderOutput::Html(self.view.render("articles/show", &article)?);
+        let output = self
+            .view
+            .render("articles/show", &article)
+            .map_err(|error| GetArticleError::Presenter(error.to_string()))?;
 
-        Ok(output)
+        Ok(RenderOutput::Html(output))
     }
 }

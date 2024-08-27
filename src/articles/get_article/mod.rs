@@ -1,3 +1,4 @@
+mod get_article_error;
 mod get_article_html_presenter;
 mod get_article_json_presenter;
 mod get_article_port;
@@ -7,6 +8,8 @@ mod render_article_port;
 
 pub mod get_article_api_controller;
 pub mod get_article_web_controller;
+
+pub use get_article_error::*;
 pub use get_article_html_presenter::*;
 pub use get_article_json_presenter::*;
 pub use get_article_port::*;

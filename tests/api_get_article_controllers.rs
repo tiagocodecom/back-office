@@ -2,11 +2,10 @@ extern crate fakeit;
 
 mod common;
 
-use back_office::articles::domain::Article;
 use common::spawn_test_app;
 use fakeit::unique::uuid_v4;
 use fakeit::words::{paragraph, sentence};
-use serde_json::json;
+use serde_json::{json, Value};
 use sqlx::query;
 
 #[tokio::test]
@@ -93,9 +92,10 @@ async fn retrieves_article_from_database() {
     let response = test_app
         .get_json(&format!("/api/articles/{}", &article_id), json!({}))
         .await;
-    let article: Article = response.json().await.unwrap();
+    let article: Value = response.json().await.unwrap();
 
-    assert_eq!(article.id().to_string(), article_id.to_string());
-    assert_eq!(article.title(), body["title"]);
-    assert_eq!(article.content(), body["content"]);
+    assert_eq!(article["id"], article_id.to_string());
+    assert_eq!(article["title"], body["title"]);
+    assert_eq!(article["content"], body["content"]);
+    assert_eq!(article["authorId"], body["author_id"]);
 }
