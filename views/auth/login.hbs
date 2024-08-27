@@ -1,41 +1,42 @@
-{{#> layout/base}}
+{{#> layout/clean}}
     {{#*inline "page"}}
-        <div class="wrapper wrapper-login">
-            <div class="container container-login animated fadeIn">
-                <h3 class="text-center">{{ title }}</h3>
-                <form class="login-form">
-                    {{#if fields}}
-                        {{#each fields as | field |}}
-                            <div class="form-group form-floating-label">
-                                <input
-                                        id="{{ id }}"
-                                        name="{{ name }}"
-                                        type="{{ type }}"
-                                        class="form-control input-border-bottom"
-                                        required=""
-                                />
-                                <label for="{{ id }}" class="placeholder">
-                                    {{ title }}
-                                </label>
-                            </div>
-                        {{/each}}
-                    {{/if}}
-                    {{#if submit}}
-                        {{#with submit}}
-                            <div class="form-action mb-3">
-                                <button id="{{ id }}" type="{{ type }}"
-                                        class="btn btn-primary btn-rounded btn-login">
-                                    {{ title }}
-                                </button>
-                            </div>
-                        {{/with}}
-                    {{/if}}
-                    <div class="login-account">
-                        <span class="msg">Don't have an account yet?</span>
-                        <span id="show-signup" class="link">Sorry but this is a restricted site!</span>
-                    </div>
-                </form>
+        <main class="login">
+            <div class="wrapper wrapper-login">
+                <div class="container container-login animated fadeIn">
+                    <h3 class="text-center">{{ title }}</h3>
+                    <form class="login-form">
+                        {{#if fields}}
+                            {{#each fields as | field |}}
+                                <div class="form-group form-floating-label">
+                                    <input id="{{ id }}"
+                                           name="{{ name }}"
+                                           type="{{ type }}"
+                                           class="form-control input-border-bottom"
+                                           required=""
+                                    />
+                                    <label for="{{ id }}" class="placeholder">
+                                        {{ title }}
+                                    </label>
+                                </div>
+                            {{/each}}
+                        {{/if}}
+                        {{#if submit}}
+                            {{#with submit}}
+                                <div class="form-action mb-3">
+                                    <button id="{{ id }}" type="{{ type }}"
+                                            class="btn btn-primary btn-rounded btn-login">
+                                        {{ title }}
+                                    </button>
+                                </div>
+                            {{/with}}
+                        {{/if}}
+                        <div class="login-account">
+                            <span class="msg">Don't have an account yet?</span>
+                            <span class="link">Sorry but this is a restricted site!</span>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </main>
     {{/inline}}
-{{/layout/base}}
+{{/layout/clean}}
