@@ -1,3 +1,4 @@
+use crate::articles::Article;
 use serde_json::Value;
 
 /// Represents the different output formats that an article can be rendered into.
@@ -17,13 +18,16 @@ use serde_json::Value;
 ///
 /// ```rust
 /// use serde_json::json;
-/// use back_office::articles::RenderOutput;
+/// use back_office::articles::{Article, RenderOutput};
 ///
 /// let json_output = RenderOutput::Json(json!({"title": "Example Article"}));
 /// let html_output = RenderOutput::Html("<h1>Example Article</h1>".into());
+/// let raw_output = RenderOutput::Raw(Article::new(Default::default(), Default::default(), "".to_string(), "".to_string(), "".to_string()));
 /// ```
 
+#[derive(Debug, PartialEq)]
 pub enum RenderOutput {
+    Raw(Article),
     Json(Value),
     Html(String),
 }

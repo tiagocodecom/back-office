@@ -1,11 +1,12 @@
 use serde::{Deserialize, Serialize};
+use std::fmt::{Debug, Formatter, Result};
 use uuid::Uuid;
 
 /// A list of articles, represented as a vector of `Article` structs.
 pub type ArticlesList = Vec<Article>;
 
 /// Represents an article with metadata such as ID, author ID, title, content, and creation timestamp.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(PartialEq, Clone, Serialize, Deserialize)]
 pub struct Article {
     id: Uuid,
     author_id: Uuid,
@@ -65,5 +66,19 @@ impl Article {
     /// Returns a reference to the article's creation timestamp.
     pub fn created_at(&self) -> &str {
         &self.created_at
+    }
+}
+
+impl Debug for Article {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        write!(
+            f,
+            "Article {{ id: {}, author_id: {}, title: {}, content: {}, created_at: {} }}",
+            self.id.to_string(),
+            self.author_id.to_string(),
+            self.title,
+            self.content,
+            self.created_at
+        )
     }
 }
