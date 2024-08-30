@@ -7,10 +7,12 @@ async fn main() -> anyhow::Result<()> {
     let subscriber = get_telemetry_subscriber("back-office".into(), "info".into(), stdout);
     init_telemetry_subscriber(subscriber)?;
 
-    let config = SettingsLoader::default().load_files().deserialize()?;
-    let application = Application::from(&config).await?;
+    let settings = SettingsLoader::default().load_files().deserialize()?;
+    let application = Application::new(&settings)
+        .await
+        .map_err(|e| anyhow::anyhow!(e.to_string()))?;
 
-    application.run_server().await?;
+    application.run().await?;
 
     Ok(())
 }

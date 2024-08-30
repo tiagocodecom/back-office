@@ -38,3 +38,20 @@ impl NewArticle {
         &self.content
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn creates_a_new_article_and_returns_the_correct_properties() {
+        let author_id = Uuid::new_v4();
+        let title = "Hello world".to_string();
+        let content = "This is the content of the article.".to_string();
+        let new_article = NewArticle::new(author_id, title.clone(), content.clone());
+
+        assert_eq!(new_article.author_id(), &author_id);
+        assert_eq!(new_article.title(), title);
+        assert_eq!(new_article.content(), content);
+    }
+}

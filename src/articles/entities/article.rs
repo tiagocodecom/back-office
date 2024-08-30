@@ -82,3 +82,30 @@ impl Debug for Article {
         )
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn creates_an_article_and_returns_the_correct_properties() {
+        let id = Uuid::new_v4();
+        let author_id = Uuid::new_v4();
+        let title = "Hello world".to_string();
+        let content = "This is the content of the article.".to_string();
+        let created_at = "2021-08-01T12:00:00Z".to_string();
+        let article = Article::new(
+            id,
+            author_id,
+            title.clone(),
+            content.clone(),
+            created_at.clone(),
+        );
+
+        assert_eq!(article.id(), &id);
+        assert_eq!(article.author_id(), &author_id);
+        assert_eq!(article.title(), title);
+        assert_eq!(article.content(), content);
+        assert_eq!(article.created_at(), created_at);
+    }
+}

@@ -1,4 +1,4 @@
-use crate::articles::Article;
+use crate::articles::entities::Article;
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]

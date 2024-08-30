@@ -1,4 +1,3 @@
-use crate::articles::Article;
 use serde_json::Value;
 
 /// Represents the different output formats that an article can be rendered into.
@@ -18,16 +17,42 @@ use serde_json::Value;
 ///
 /// ```rust
 /// use serde_json::json;
-/// use back_office::articles::{Article, RenderOutput};
+/// use back_office::articles::entities::{Article, RenderOutput};
 ///
 /// let json_output = RenderOutput::Json(json!({"title": "Example Article"}));
 /// let html_output = RenderOutput::Html("<h1>Example Article</h1>".into());
-/// let raw_output = RenderOutput::Raw(Article::new(Default::default(), Default::default(), "".to_string(), "".to_string(), "".to_string()));
 /// ```
 
 #[derive(Debug, PartialEq)]
 pub enum RenderOutput {
-    Raw(Article),
     Json(Value),
     Html(String),
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn creates_a_json_variant() {
+        let json = json!({"title": "Example Article"});
+        let output = RenderOutput::Json(json.clone());
+
+        match output {
+            RenderOutput::Json(value) => assert_eq!(value, json),
+            _ => panic!("Expected a Json variant"),
+        }
+    }
+
+    #[test]
+    fn creates_an_html_variant() {
+        let html = "<h1>Example Article</h1>".to_string();
+        let output = RenderOutput::Html(html.clone());
+
+        match output {
+            RenderOutput::Html(value) => assert_eq!(value, html),
+            _ => panic!("Expected an Html variant"),
+        }
+    }
 }

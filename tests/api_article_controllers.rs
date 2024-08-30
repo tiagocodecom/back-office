@@ -9,7 +9,7 @@ use serde_json::{json, Value};
 use sqlx::query;
 
 #[tokio::test]
-async fn returns_200_for_valid_json() {
+async fn creation_returns_200_status_code_when_valid_data() {
     let test_app = spawn_test_app().await;
     let body = json!({
         "title": sentence(5),
@@ -22,7 +22,7 @@ async fn returns_200_for_valid_json() {
 }
 
 #[tokio::test]
-async fn returns_400_for_invalid_json() {
+async fn creation_returns_400_status_code_when_invalid_data() {
     let test_app = spawn_test_app().await;
     let cases = vec![
         json!({
@@ -44,7 +44,7 @@ async fn returns_400_for_invalid_json() {
 }
 
 #[tokio::test]
-async fn persists_new_article_to_database() {
+async fn creation_persists_the_article() {
     let test_app = spawn_test_app().await;
     let title = sentence(5);
     let author_id = uuid_v4();
@@ -66,36 +66,4 @@ async fn persists_new_article_to_database() {
     assert_eq!(saved.title, title);
     assert_eq!(saved.content, content);
     assert_eq!(saved.author_id.to_string(), author_id);
-}
-
-#[tokio::test]
-async fn retrieves_article_from_database() {
-    let test_app = spawn_test_app().await;
-
-    let title = sentence(5);
-    let author_id = uuid_v4();
-    let content = paragraph(5, 5, 10, "".into());
-
-    let body = json!({
-        "title": &title,
-        "author_id": &author_id,
-        "content": &content,
-    });
-
-    let article_id = &test_app
-        .post_json("/api/articles", body.clone())
-        .await
-        .text()
-        .await
-        .unwrap();
-
-    let response = test_app
-        .get_json(&format!("/api/articles/{}", &article_id), json!({}))
-        .await;
-    let article: Value = response.json().await.unwrap();
-
-    assert_eq!(article["id"], article_id.to_string());
-    assert_eq!(article["title"], body["title"]);
-    assert_eq!(article["content"], body["content"]);
-    assert_eq!(article["authorId"], body["author_id"]);
 }

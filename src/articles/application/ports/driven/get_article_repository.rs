@@ -1,5 +1,4 @@
-use crate::articles::get_article::GetArticleError;
-use crate::articles::Article;
+use crate::articles::entities::{Article, ArticleError};
 use async_trait::async_trait;
 use uuid::Uuid;
 
@@ -9,7 +8,7 @@ use mockall::automock;
 /// A trait for fetching an article by its unique ID.
 #[cfg_attr(test, automock)]
 #[async_trait(?Send)]
-pub trait GetArticlePort {
+pub trait GetArticleRepository {
     /// Retrieves an `Article` by its `UUID`.
     ///
     /// # Parameters
@@ -17,5 +16,5 @@ pub trait GetArticlePort {
     ///
     /// # Returns
     /// A result containing the `Article` or an error if not found.
-    async fn get_article_by_id(&self, article_id: Uuid) -> Result<Article, GetArticleError>;
+    async fn get_article_by_id(&self, article_id: &Uuid) -> Result<Article, ArticleError>;
 }
