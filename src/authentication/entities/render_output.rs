@@ -1,3 +1,5 @@
+use serde_json::Value;
+
 /// Represents the different output formats that a form can be rendered into.
 ///
 /// This enum is used to encapsulate the result of rendering an article, allowing for
@@ -12,5 +14,5 @@
 ///
 pub enum RenderOutput {
     Html(String),
-    Json(serde_json::Value),
+    Json(Value),
 }

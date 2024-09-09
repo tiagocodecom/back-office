@@ -1,5 +1,6 @@
 pub mod articles;
 pub mod authentication;
+pub mod common;
 pub mod framework;
 pub mod users;
 

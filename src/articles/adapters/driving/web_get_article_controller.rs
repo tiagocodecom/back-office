@@ -14,7 +14,7 @@ pub struct GetArticleRequestPath {
 }
 
 #[tracing::instrument(
-    name = "Show article request",
+    name = "WebGetArticleController",
     skip(sc, path),
     fields(article_id = %path.id)
 )]

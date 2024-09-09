@@ -1,5 +1,5 @@
 use crate::articles::adapters::driving::web_get_article_controller as web_get_article;
-use crate::authentication::get_login::get_login_web_controller as web_get_form;
+use crate::authentication::adapters::driving::web_show_login_controller as web_get_form;
 use actix_web::web::{get, scope, ServiceConfig};
 use actix_web::HttpResponse;
 
