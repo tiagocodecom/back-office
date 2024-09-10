@@ -1,4 +1,3 @@
-mod render_output;
-
-pub mod get_login;
-pub use render_output::*;
+pub mod adapters;
+pub mod application;
+pub mod entities;

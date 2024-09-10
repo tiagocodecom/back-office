@@ -1,6 +1,7 @@
-use crate::articles::get_article::{GetArticleHtmlPresenter, GetArticleJsonPresenter};
-use crate::articles::PostgresArticleRepository;
-use crate::authentication::get_login::{GetLoginHtmlPresenter, GetLoginProvider};
+use crate::articles::adapters::driven::HtmlGetArticlePresenter;
+use crate::articles::adapters::driven::JsonGetArticlePresenter;
+use crate::articles::adapters::driven::PostgresArticleRepository;
+use crate::authentication::adapters::driven::{DefaultLoginProvider, HtmlLoginPresenter};
 use crate::framework::database::Database;
 use crate::framework::handlebars::init_handlebars_engine;
 use crate::framework::settings::entities::config::Config;
@@ -8,11 +9,11 @@ use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct Container<'a> {
-    pub article_postgres_repository: PostgresArticleRepository,
-    pub article_html_presenter: GetArticleHtmlPresenter<'a>,
-    pub article_json_presenter: GetArticleJsonPresenter,
-    pub login_provider: GetLoginProvider,
-    pub login_html_presenter: GetLoginHtmlPresenter<'a>,
+    pub postgres_article_repository: PostgresArticleRepository,
+    pub html_get_article_presenter: HtmlGetArticlePresenter<'a>,
+    pub json_get_article_presenter: JsonGetArticlePresenter,
+    pub default_login_provider: DefaultLoginProvider,
+    pub html_login_presenter: HtmlLoginPresenter<'a>,
 }
 
 impl<'a> Container<'a> {
@@ -21,11 +22,11 @@ impl<'a> Container<'a> {
         let connection_pool = Arc::new(Database::new_pool(&config.database));
 
         Self {
-            article_postgres_repository: PostgresArticleRepository::new(connection_pool),
-            article_html_presenter: GetArticleHtmlPresenter::new(handlebars.clone()),
-            article_json_presenter: GetArticleJsonPresenter::new(),
-            login_provider: GetLoginProvider::new(),
-            login_html_presenter: GetLoginHtmlPresenter::new(handlebars.clone()),
+            postgres_article_repository: PostgresArticleRepository::new(connection_pool),
+            html_get_article_presenter: HtmlGetArticlePresenter::new(handlebars.clone()),
+            json_get_article_presenter: JsonGetArticlePresenter::new(),
+            default_login_provider: DefaultLoginProvider::default(),
+            html_login_presenter: HtmlLoginPresenter::new(handlebars.clone()),
         }
     }
 }

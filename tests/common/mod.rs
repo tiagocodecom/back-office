@@ -63,9 +63,9 @@ pub async fn spawn_test_app() -> TestApplication {
     let http_client = spawn_test_http_client();
     let connection_pool = spawn_test_database_pool(&config.database).await;
 
-    let application = Application::from(&config).await.unwrap();
+    let application = Application::new(&config).await.unwrap();
     let port = application.port();
-    let _ = tokio::spawn(application.run_server());
+    let _ = tokio::spawn(application.run());
 
     TestApplication {
         http_client,
