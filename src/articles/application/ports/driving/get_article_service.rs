@@ -1,4 +1,4 @@
-use crate::articles::entities::ArticleError;
+use crate::articles::entities::Error;
 use async_trait::async_trait;
 use uuid::Uuid;
 
@@ -6,5 +6,5 @@ use uuid::Uuid;
 pub trait GetArticleService {
     type Output;
 
-    async fn execute(&self, article_id: &Uuid) -> Result<Self::Output, ArticleError>;
+    async fn execute(&self, article_id: &Uuid) -> Result<Self::Output, Error>;
 }

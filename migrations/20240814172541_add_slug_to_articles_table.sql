@@ -1,2 +1,0 @@
--- Add migration script here
--- ALTER TABLE articles ADD COLUMN slug VARCHAR(255) NOT NULL;

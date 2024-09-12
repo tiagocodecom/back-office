@@ -1,42 +1,15 @@
+use derive_builder::Builder;
+use derive_getters::Getters;
 use uuid::Uuid;
 
-/// Represents a new article to be created, containing the author's ID, title, and content.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Getters, Builder)]
 pub struct NewArticle {
-    author_id: Uuid,
+    slug: String,
     title: String,
+    summary: String,
     content: String,
-}
-
-impl NewArticle {
-    /// Creates a new `NewArticle` with the specified author ID, title, and content.
-    ///
-    /// # Parameters
-    /// - `author_id`: The UUID of the author.
-    /// - `title`: The title of the article.
-    /// - `content`: The content of the article.
-    pub fn new(author_id: Uuid, title: String, content: String) -> Self {
-        Self {
-            author_id,
-            title,
-            content,
-        }
-    }
-
-    /// Returns a reference to the author's ID.
-    pub fn author_id(&self) -> &Uuid {
-        &self.author_id
-    }
-
-    /// Returns a reference to the article's title.
-    pub fn title(&self) -> &str {
-        &self.title
-    }
-
-    /// Returns a reference to the article's content.
-    pub fn content(&self) -> &str {
-        &self.content
-    }
+    author_id: Uuid,
+    thumbnail_uri: String,
 }
 
 #[cfg(test)]
@@ -45,13 +18,31 @@ mod tests {
 
     #[test]
     fn creates_a_new_article_and_returns_the_correct_properties() {
+        let slug = "lorem-ipsum-dolor-sit-amet".to_string();
+        let title = "Lorem ipsum dolor sit amet".to_string();
+        let summary = "In this article, we will talk about lorem ipsum.".to_string();
+        let content = r#"
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+            when an unknown printer took a galley of type and scrambled it to make a type
+        "#
+        .to_string();
         let author_id = Uuid::new_v4();
-        let title = "Hello world".to_string();
-        let content = "This is the content of the article.".to_string();
-        let new_article = NewArticle::new(author_id, title.clone(), content.clone());
 
+        let new_article = NewArticleBuilder::default()
+            .author_id(author_id)
+            .slug(slug.clone())
+            .summary(summary.clone())
+            .title(title.clone())
+            .content(content.clone())
+            .thumbnail_uri("/static/images/articles/thumbnail.jpg".to_string())
+            .build()
+            .unwrap();
+
+        assert_eq!(new_article.slug(), &slug);
+        assert_eq!(new_article.title(), &title);
+        assert_eq!(new_article.summary(), &summary);
+        assert_eq!(new_article.content(), &content);
         assert_eq!(new_article.author_id(), &author_id);
-        assert_eq!(new_article.title(), title);
-        assert_eq!(new_article.content(), content);
     }
 }

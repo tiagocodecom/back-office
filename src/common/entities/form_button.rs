@@ -1,5 +1,3 @@
-use serde::Deserialize;
-
 /// Represents a button element in a form.
 ///
 /// This struct encapsulates the properties of a form button, such as

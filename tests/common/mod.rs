@@ -1,12 +1,16 @@
+use back_office::articles::entities::Slug;
 use back_office::framework::database::Database;
 use back_office::framework::settings::entities::config::Config;
 use back_office::framework::settings::entities::database::DatabaseConfig;
 use back_office::framework::telemetry::{get_telemetry_subscriber, init_telemetry_subscriber};
 use back_office::{Application, SettingsLoader};
+use fakeit::image::url;
+use fakeit::unique::uuid_v4;
+use fakeit::words::{paragraph, sentence};
 use once_cell::sync::Lazy;
 use reqwest::redirect::Policy;
 use reqwest::{Client, Method, Response};
-use serde_json::Value;
+use serde_json::{json, Value};
 use sqlx::{migrate, Connection, Executor, PgConnection, PgPool};
 use std::env::var;
 use std::io::{sink, stdout};
@@ -53,6 +57,19 @@ impl TestApplication {
             .send()
             .await
             .expect("Failed to execute request.")
+    }
+
+    pub async fn create_article(&self) -> Response {
+        let json = json!({
+            "title": sentence(10),
+            "slug": Slug::from(sentence(10)).as_ref(),
+            "summary": paragraph(1, 1, 100, "".into()),
+            "content": paragraph(1, 1, 1000, "".into()),
+            "thumbnail_uri": url(500, 500),
+            "author_id": uuid_v4(),
+        });
+
+        self.post_json("/api/articles", json).await
     }
 }
 

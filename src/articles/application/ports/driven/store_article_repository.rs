@@ -1,4 +1,4 @@
-use crate::articles::entities::{ArticleError, NewArticle};
+use crate::articles::entities::{Error, NewArticle};
 use async_trait::async_trait;
 
 #[cfg(test)]
@@ -16,5 +16,5 @@ pub trait StoreArticleRepository {
     ///
     /// # Returns
     /// A result containing the `Article` or an error if something failed.
-    async fn store_article(&self, new_article: &NewArticle) -> Result<Uuid, ArticleError>;
+    async fn store_article(&self, new_article: &NewArticle) -> Result<Uuid, Error>;
 }

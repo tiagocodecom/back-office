@@ -1,4 +1,4 @@
-use crate::articles::entities::{Article, ArticleError};
+use crate::articles::entities::{Article, Error};
 use async_trait::async_trait;
 use uuid::Uuid;
 
@@ -16,5 +16,5 @@ pub trait GetArticleRepository {
     ///
     /// # Returns
     /// A result containing the `Article` or an error if not found.
-    async fn get_article_by_id(&self, article_id: &Uuid) -> Result<Article, ArticleError>;
+    async fn get_article_by_id(&self, article_id: &Uuid) -> Result<Article, Error>;
 }

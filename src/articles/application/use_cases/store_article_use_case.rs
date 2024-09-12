@@ -1,7 +1,7 @@
 use crate::articles::application::ports::driven::GetArticleRepository;
 use crate::articles::application::ports::driven::{GetArticlePresenter, StoreArticleRepository};
 use crate::articles::application::ports::driving::StoreArticleService;
-use crate::articles::entities::{ArticleError, NewArticle, RenderOutput};
+use crate::articles::entities::{Error, NewArticle, RenderOutput};
 use async_trait::async_trait;
 
 pub struct StoreArticleUseCase<R: StoreArticleRepository, P: GetArticlePresenter> {
@@ -30,7 +30,7 @@ where
 {
     type Output = RenderOutput;
 
-    async fn execute(&self, new_article: &NewArticle) -> Result<Self::Output, ArticleError> {
+    async fn execute(&self, new_article: &NewArticle) -> Result<Self::Output, Error> {
         // Ideally we would check if the user is authorized to create an article here.
         // As we don't have authentication in this example, we'll just create the article.
 

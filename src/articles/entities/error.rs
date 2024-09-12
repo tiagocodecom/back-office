@@ -1,7 +1,7 @@
 use thiserror::Error;
 
 #[derive(Error, Debug, PartialEq)]
-pub enum ArticleError {
+pub enum Error {
     #[error("Not found  `{0}`")]
     NotFound(String),
 

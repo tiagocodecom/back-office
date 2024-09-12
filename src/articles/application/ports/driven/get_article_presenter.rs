@@ -1,4 +1,4 @@
-use crate::articles::entities::{Article, ArticleError};
+use crate::articles::entities::{Article, Error};
 #[cfg(test)]
 use mockall::automock;
 
@@ -17,5 +17,5 @@ pub trait GetArticlePresenter {
     ///
     /// # Returns
     /// A result containing the rendered output or an error if the process fails.
-    fn present_article(&self, article: Article) -> Result<Self::Output, ArticleError>;
+    fn present_article(&self, article: Article) -> Result<Self::Output, Error>;
 }

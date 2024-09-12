@@ -1,6 +1,6 @@
 use crate::articles::application::ports::driving::StoreArticleService;
 use crate::articles::application::use_cases::StoreArticleUseCase;
-use crate::articles::entities::{NewArticle, RenderOutput};
+use crate::articles::entities::{NewArticle, NewArticleBuilder, RenderOutput};
 use crate::framework::container::Container;
 use actix_web::web::{Data, Json};
 use actix_web::HttpResponse;
@@ -10,16 +10,28 @@ use validator::Validate;
 
 #[derive(Validate, Deserialize)]
 pub struct NewArticleRequest {
-    pub author_id: Uuid,
+    #[validate(length(min = 10))]
+    pub slug: String,
     #[validate(length(min = 10))]
     pub title: String,
-    #[validate(length(min = 100))]
+    #[validate(length(min = 50))]
+    pub summary: String,
+    #[validate(length(min = 500))]
     pub content: String,
+    pub author_id: Uuid,
 }
 
 impl From<NewArticleRequest> for NewArticle {
     fn from(value: NewArticleRequest) -> Self {
-        Self::new(value.author_id, value.title, value.content)
+        NewArticleBuilder::default()
+            .slug(value.slug)
+            .title(value.title)
+            .summary(value.summary)
+            .content(value.content)
+            .author_id(value.author_id)
+            .thumbnail_uri("/static/images/articles/thumbnail.jpg".to_string())
+            .build()
+            .unwrap()
     }
 }
 

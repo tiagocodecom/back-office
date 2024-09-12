@@ -1,6 +1,6 @@
 use crate::articles::adapters::driven::get_article_view_model::GetArticleViewModel;
 use crate::articles::application::ports::driven::GetArticlePresenter;
-use crate::articles::entities::{Article, ArticleError, RenderOutput};
+use crate::articles::entities::{Article, Error, RenderOutput};
 
 /// A presenter that renders an `Article` into a specific output format.
 #[derive(Debug, Clone)]
@@ -15,7 +15,7 @@ impl JsonGetArticlePresenter {
 impl GetArticlePresenter for &JsonGetArticlePresenter {
     type Output = RenderOutput;
 
-    fn present_article(&self, article: Article) -> Result<Self::Output, ArticleError> {
+    fn present_article(&self, article: Article) -> Result<Self::Output, Error> {
         let article = GetArticleViewModel::from(article);
         let output = serde_json::json!(article);
 
