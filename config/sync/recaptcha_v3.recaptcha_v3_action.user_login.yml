@@ -1,0 +1,8 @@
+uuid: 44b113e0-ad52-4c3f-aaa4-7f3610613e0d
+langcode: en
+status: true
+dependencies: {  }
+id: user_login
+label: 'User login'
+threshold: 0.7
+challenge: recaptcha/reCAPTCHA

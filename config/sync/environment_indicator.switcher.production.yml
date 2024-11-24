@@ -1,0 +1,11 @@
+uuid: 5728226a-67d3-40d8-8699-0a9fc070d58b
+langcode: en
+status: true
+dependencies: {  }
+machine: production
+description: null
+name: Production
+weight: 2
+url: 'https://admin.tiagocode.com'
+fg_color: '#ffffff'
+bg_color: '#00ad03'
