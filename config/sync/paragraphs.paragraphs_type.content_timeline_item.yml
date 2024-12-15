@@ -1,9 +1,9 @@
-uuid: 6106fb02-60df-425d-93fd-87d603be9d2d
+uuid: 92292442-88d0-43fb-a3ca-681ce615ffed
 langcode: en
 status: true
 dependencies: {  }
-id: content_text
-label: Text
+id: content_timeline_item
+label: 'Timeline Item'
 icon_uuid: null
 icon_default: null
 description: ''

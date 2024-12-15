@@ -1,9 +1,9 @@
-uuid: 6106fb02-60df-425d-93fd-87d603be9d2d
+uuid: 9c19aa2b-f1fd-4498-8998-8446512adbfa
 langcode: en
 status: true
 dependencies: {  }
-id: content_text
-label: Text
+id: portfolio_resume
+label: 'Portfolio: Resume'
 icon_uuid: null
 icon_default: null
 description: ''

@@ -1,9 +1,9 @@
-uuid: 6106fb02-60df-425d-93fd-87d603be9d2d
+uuid: 4b1f93b9-d85e-4ea0-bf56-c94b442bf1b1
 langcode: en
 status: true
 dependencies: {  }
-id: content_text
-label: Text
+id: portfolio_about_me
+label: 'Portfolio: About me'
 icon_uuid: null
 icon_default: null
 description: ''
