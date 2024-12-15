@@ -1,20 +1,20 @@
-uuid: c3f85610-3462-4294-88cf-de7e59b7c16d
+uuid: 573aea8e-15af-48f6-93ee-8bf16afda6a3
 langcode: en
 status: true
 dependencies:
   config:
-    - node.type.article
+    - node.type.portfolio
   module:
     - jsonapi_defaults
 third_party_settings:
   jsonapi_defaults:
     default_include:
-      - 'tags,thumbnail.media_image,content,content.media.media_image,content.media.thumbnail'
+      - 'content,content.media.media_image,content.items.media.media_image,content.items.items'
     page_limit: 50
-id: node--article
+id: node--portfolio
 disabled: false
-path: node/article
-resourceType: node--article
+path: node/portfolio
+resourceType: node--portfolio
 resourceFields:
   nid:
     disabled: true
@@ -160,33 +160,9 @@ resourceFields:
     publicName: body
     enhancer:
       id: ''
-  comment:
-    disabled: true
-    fieldName: comment
-    publicName: comment
-    enhancer:
-      id: ''
   field_content:
     disabled: false
     fieldName: field_content
     publicName: content
-    enhancer:
-      id: ''
-  field_image:
-    disabled: true
-    fieldName: field_image
-    publicName: image
-    enhancer:
-      id: ''
-  field_tags:
-    disabled: false
-    fieldName: field_tags
-    publicName: tags
-    enhancer:
-      id: ''
-  field_thumbnail:
-    disabled: false
-    fieldName: field_thumbnail
-    publicName: thumbnail
     enhancer:
       id: ''
