@@ -125,7 +125,7 @@ resourceFields:
     enhancer:
       id: ''
   metatag:
-    disabled: false
+    disabled: true
     fieldName: metatag
     publicName: metatag
     enhancer:

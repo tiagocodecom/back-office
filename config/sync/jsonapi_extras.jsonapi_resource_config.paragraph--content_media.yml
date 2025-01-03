@@ -4,6 +4,11 @@ status: true
 dependencies:
   config:
     - paragraphs.paragraphs_type.content_media
+  module:
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    page_limit: 50
 id: paragraph--content_media
 disabled: false
 path: paragraph/content_media
@@ -28,7 +33,7 @@ resourceFields:
     enhancer:
       id: ''
   langcode:
-    disabled: false
+    disabled: true
     fieldName: langcode
     publicName: langcode
     enhancer:

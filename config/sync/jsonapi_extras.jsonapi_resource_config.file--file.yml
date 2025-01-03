@@ -4,6 +4,10 @@ status: true
 dependencies:
   module:
     - file
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    page_limit: 50
 id: file--file
 disabled: false
 path: file/file
@@ -22,7 +26,7 @@ resourceFields:
     enhancer:
       id: ''
   langcode:
-    disabled: false
+    disabled: true
     fieldName: langcode
     publicName: langcode
     enhancer:
@@ -34,7 +38,7 @@ resourceFields:
     enhancer:
       id: ''
   filename:
-    disabled: false
+    disabled: true
     fieldName: filename
     publicName: filename
     enhancer:
@@ -46,7 +50,7 @@ resourceFields:
     enhancer:
       id: ''
   filemime:
-    disabled: false
+    disabled: true
     fieldName: filemime
     publicName: filemime
     enhancer:
