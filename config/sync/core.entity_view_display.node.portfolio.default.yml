@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.portfolio.body
     - field.field.node.portfolio.field_content
+    - field.field.node.portfolio.field_thumbnail
     - node.type.portfolio
   module:
     - entity_reference_revisions
@@ -30,6 +31,14 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_thumbnail:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
     region: content
   links:
     settings: {  }

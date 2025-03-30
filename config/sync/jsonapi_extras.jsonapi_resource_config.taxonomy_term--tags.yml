@@ -4,6 +4,11 @@ status: true
 dependencies:
   config:
     - taxonomy.vocabulary.tags
+  module:
+    - jsonapi_defaults
+third_party_settings:
+  jsonapi_defaults:
+    page_limit: 50
 id: taxonomy_term--tags
 disabled: false
 path: taxonomy_term/tags
@@ -111,6 +116,12 @@ resourceFields:
     publicName: revision_translation_affected
     enhancer:
       id: ''
+  metatag:
+    disabled: true
+    fieldName: metatag
+    publicName: metatag
+    enhancer:
+      id: ''
   path:
     disabled: false
     fieldName: path
@@ -139,5 +150,11 @@ resourceFields:
     disabled: true
     fieldName: content_translation_created
     publicName: content_translation_created
+    enhancer:
+      id: ''
+  field_emoji:
+    disabled: false
+    fieldName: field_emoji
+    publicName: emoji
     enhancer:
       id: ''

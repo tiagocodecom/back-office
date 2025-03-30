@@ -8,20 +8,20 @@ dependencies:
 id: node_article
 label: 'Node: Article'
 type: 'canonical_entities:node'
-pattern: '[node:content-type]/[node:title]'
+pattern: '[node:langcode]/articles/[node:field_tags:entity:name]/[node:title]'
 selection_criteria:
-  f3f78041-ccb1-4e3a-b6da-db1a0ffaa20d:
+  fef53b56-8825-40c1-aac4-3277eb206797:
     id: 'entity_bundle:node'
     negate: false
-    uuid: f3f78041-ccb1-4e3a-b6da-db1a0ffaa20d
+    uuid: fef53b56-8825-40c1-aac4-3277eb206797
     context_mapping:
       node: node
     bundles:
       article: article
-  2f6b218a-78fd-473f-bad0-6716ba4842dc:
+  274f7928-da59-42cb-80db-e0660ceff359:
     id: language
     negate: false
-    uuid: 2f6b218a-78fd-473f-bad0-6716ba4842dc
+    uuid: 274f7928-da59-42cb-80db-e0660ceff359
     context_mapping:
       language: 'node:langcode:language'
     langcodes:

@@ -6,6 +6,7 @@ dependencies:
     - field.storage.node.field_content
     - node.type.portfolio
     - paragraphs.paragraphs_type.portfolio_about_me
+    - paragraphs.paragraphs_type.portfolio_blog
     - paragraphs.paragraphs_type.portfolio_projects
     - paragraphs.paragraphs_type.portfolio_resume
   module:
@@ -27,21 +28,34 @@ settings:
       portfolio_about_me: portfolio_about_me
       portfolio_resume: portfolio_resume
       portfolio_projects: portfolio_projects
+      portfolio_blog: portfolio_blog
     negate: 0
     target_bundles_drag_drop:
+      content_hover_card:
+        weight: -13
+        enabled: false
       content_media:
-        weight: 3
+        weight: -15
         enabled: false
       content_text:
-        weight: 4
+        weight: -14
+        enabled: false
+      content_timeline:
+        weight: -12
+        enabled: false
+      content_timeline_item:
+        weight: -11
         enabled: false
       portfolio_about_me:
-        weight: 6
+        weight: -19
+        enabled: true
+      portfolio_blog:
+        weight: -16
         enabled: true
       portfolio_projects:
-        weight: 9
+        weight: -17
         enabled: true
       portfolio_resume:
-        weight: 8
+        weight: -18
         enabled: true
 field_type: entity_reference_revisions

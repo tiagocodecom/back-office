@@ -116,10 +116,16 @@ resourceFields:
     publicName: content_translation_changed
     enhancer:
       id: ''
-  field_media:
+  field_document:
     disabled: false
-    fieldName: field_media
-    publicName: media
+    fieldName: field_document
+    publicName: document
+    enhancer:
+      id: ''
+  field_image:
+    disabled: false
+    fieldName: field_image
+    publicName: image
     enhancer:
       id: ''
   field_subtitle:

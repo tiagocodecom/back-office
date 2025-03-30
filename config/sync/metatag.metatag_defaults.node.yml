@@ -7,6 +7,14 @@ _core:
 id: node
 label: Content
 tags:
-  title: '[node:title] | [site:name]'
-  description: '[node:summary]'
   canonical_url: '[node:url]'
+  description: '[node:summary]'
+  keywords: 'Software Developer, Web Developer, Full-Stack Developer, Backend Developer, Rust Developer, PHP Developer, Laravel Developer, JavaScript Developer, Leptos Framework, Web Development, Personal Portfolio, Coding Blog, Programming Articles, Tech Blog, Open Source, Software Engineering, Cloud Computing, API Development, SEO Optimization, Responsive Web Design'
+  og_description: '[node:summary]'
+  og_image: '[node:field_thumbnail:entity:url]'
+  og_site_name: '[site:name]'
+  og_title: '[node:title] | [site:name]'
+  title: '[node:title] | [site:name]'
+  twitter_cards_description: '[node:summary]'
+  twitter_cards_title: '[node:title] | [site:name]'
+  twitter_cards_type: summary

@@ -87,7 +87,7 @@ settings:
         - heading5
         - heading6
     ckeditor5_imageResize:
-      allow_resize: true
+      allow_resize: false
     ckeditor5_list:
       properties:
         reversed: true
@@ -96,10 +96,4 @@ settings:
     ckeditor5_sourceEditing:
       allowed_tags: {  }
 image_upload:
-  status: true
-  scheme: public
-  directory: inline-images
-  max_size: null
-  max_dimensions:
-    width: null
-    height: null
+  status: false

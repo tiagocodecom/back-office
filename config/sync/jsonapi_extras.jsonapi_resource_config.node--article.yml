@@ -95,9 +95,9 @@ resourceFields:
     enhancer:
       id: ''
   promote:
-    disabled: true
+    disabled: false
     fieldName: promote
-    publicName: promote
+    publicName: promoted
     enhancer:
       id: ''
   sticky:
@@ -155,11 +155,13 @@ resourceFields:
     enhancer:
       id: ''
   body:
-    disabled: true
+    disabled: false
     fieldName: body
     publicName: body
     enhancer:
-      id: ''
+      id: nested
+      settings:
+        path: summary
   comment:
     disabled: true
     fieldName: comment

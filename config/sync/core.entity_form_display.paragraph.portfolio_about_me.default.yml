@@ -3,7 +3,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.portfolio_about_me.field_media
+    - field.field.paragraph.portfolio_about_me.field_document
+    - field.field.paragraph.portfolio_about_me.field_image
     - field.field.paragraph.portfolio_about_me.field_subtitle
     - field.field.paragraph.portfolio_about_me.field_text
     - field.field.paragraph.portfolio_about_me.field_text_list
@@ -18,7 +19,14 @@ targetEntityType: paragraph
 bundle: portfolio_about_me
 mode: default
 content:
-  field_media:
+  field_document:
+    type: media_library_widget
+    weight: 6
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_image:
     type: media_library_widget
     weight: 0
     region: content
@@ -63,6 +71,11 @@ content:
     region: content
     settings:
       placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 7
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true

@@ -8,20 +8,20 @@ dependencies:
 id: node_portfolio
 label: 'Node: Portfolio'
 type: 'canonical_entities:node'
-pattern: '[node:content-type]/[node:title]'
+pattern: '[node:langcode]/[node:content-type]/[node:title]'
 selection_criteria:
-  5128591b-8b7a-41f1-9536-2c4730ac0d21:
+  16713aec-1e06-44d1-9583-5793d0ebdb59:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 5128591b-8b7a-41f1-9536-2c4730ac0d21
+    uuid: 16713aec-1e06-44d1-9583-5793d0ebdb59
     context_mapping:
       node: node
     bundles:
       portfolio: portfolio
-  2198c674-e998-4e0d-b49c-edf06a448e39:
+  6d50294c-e563-4827-8c8e-84e51849ed1b:
     id: language
     negate: false
-    uuid: 2198c674-e998-4e0d-b49c-edf06a448e39
+    uuid: 6d50294c-e563-4827-8c8e-84e51849ed1b
     context_mapping:
       language: 'node:langcode:language'
     langcodes:

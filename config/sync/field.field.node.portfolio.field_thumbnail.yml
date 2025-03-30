@@ -1,16 +1,16 @@
-uuid: 004cbb53-52bc-481e-be93-6d908da123a9
+uuid: 58d4b426-9627-4d98-a4f9-1026c151fab0
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_media
+    - field.storage.node.field_thumbnail
     - media.type.image
-    - paragraphs.paragraphs_type.portfolio_about_me
-id: paragraph.portfolio_about_me.field_media
-field_name: field_media
-entity_type: paragraph
-bundle: portfolio_about_me
-label: Media
+    - node.type.portfolio
+id: node.portfolio.field_thumbnail
+field_name: field_thumbnail
+entity_type: node
+bundle: portfolio
+label: Thumbnail
 description: ''
 required: true
 translatable: false
@@ -25,5 +25,5 @@ settings:
       field: _none
       direction: ASC
     auto_create: false
-    auto_create_bundle: image
+    auto_create_bundle: ''
 field_type: entity_reference
