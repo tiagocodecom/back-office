@@ -1,0 +1,11 @@
+uuid: faee8152-cf84-4660-bd40-e43e88bdbacf
+langcode: en
+status: true
+dependencies: {  }
+machine: development
+description: null
+name: Development
+weight: 0
+url: 'https://local-admin.tiagocode.com'
+fg_color: '#ffffff'
+bg_color: '#00b3ff'

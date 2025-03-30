@@ -1,0 +1,11 @@
+uuid: 241f72e0-e666-4577-965e-82871573f582
+langcode: en
+status: true
+dependencies: {  }
+machine: stage
+description: null
+name: Stage
+weight: 1
+url: 'https://stage-admin.tiagocode.com'
+fg_color: '#ffffff'
+bg_color: '#c23dff'

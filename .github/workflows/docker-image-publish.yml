@@ -1,0 +1,21 @@
+name: Deploy image to Github CR
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub CR
+        run: |
+          echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u smarulanda97 --password-stdin
+
+      - name: Build and Push the image
+        run: |
+          docker build . --tag ghcr.io/tiagocodecom/back-office:latest
+          docker push ghcr.io/tiagocodecom/back-office:latest
