@@ -867,7 +867,25 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
  *
  * Keep this code block at the end of this file to take full effect.
  */
-#
-# if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-#   include $app_root . '/' . $site_path . '/settings.local.php';
-# }
+
+$domain = $_ENV['DRUPAL_SLD'];
+
+$settings['hash_salt'] = $_ENV['DRUPAL_HASH_SALT'];
+$settings['config_sync_directory'] = $_ENV['DRUPAL_CONFIG_SYNC_PATH'];
+$settings['file_private_path'] = $_ENV['DRUPAL_PRIVATE_FILES_PATH'];
+$settings['file_public_base_url'] = $_ENV['DRUPAL_PUBLIC_FILES_BASE_URL'];
+
+$databases['default']['default'] = [
+    'host' => $_ENV['DRUPAL_DB_HOST'],
+    'driver' => $_ENV['DRUPAL_DB_DRIVER'],
+    'prefix' => $_ENV['DRUPAL_DB_PREFIX'],
+    'database' => $_ENV['DRUPAL_DB_NAME'],
+    'username' => $_ENV['DRUPAL_DB_USER'],
+    'password' => $_ENV['DRUPAL_DB_PASSWORD'],
+];
+
+$settings['trusted_host_patterns'] = [ 
+    "^$domain\.com$", 
+    "^.+\.$domain\.com$",
+    "^" . $_ENV['DRUPAL_SERVER_HOST'] ."$",
+];
