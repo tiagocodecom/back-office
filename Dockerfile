@@ -10,9 +10,10 @@ RUN set -ex; \
     apk --update --no-cache add \
         shadow \
         bash \
-        nano \ 
+        nano \
         curl \
         sudo \
+        git \
         su-exec;
 
 RUN set -ex; \
