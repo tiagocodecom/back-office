@@ -889,3 +889,12 @@ $settings['trusted_host_patterns'] = [
     "^.+\.$domain\.com$",
     "^" . $_ENV['DRUPAL_SERVER_HOST'] ."$",
 ];
+
+$settings['s3fs.use_s3_for_public'] = TRUE;
+$settings['s3fs.upload_as_private'] = TRUE;
+$settings['s3fs.use_s3_for_private'] = TRUE;
+$settings['s3fs.access_key'] = $_ENV['DRUPAL_S3FS_ACCESS_KEY'];
+$settings['s3fs.secret_key'] = $_ENV['DRUPAL_S3FS_SECRET_KEY'];
+
+$config['s3fs.settings']['bucket'] = $_ENV["DRUPAL_S3FS_BUCKET"];
+$config['s3fs.settings']['region'] = $_ENV["DRUPAL_S3FS_REGION"];

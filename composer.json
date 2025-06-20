@@ -48,6 +48,7 @@
         "drupal/rest_api_authentication": "^2.0",
         "drupal/rest_menu_items": "^3.0",
         "drupal/restui": "^1.22",
+        "drupal/s3fs": "^3.7",
         "drupal/security_review": "^3.1",
         "drupal/subrequests": "^3.0",
         "drupal/tfa": "^1.9",
