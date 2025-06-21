@@ -14,6 +14,7 @@ RUN set -ex; \
         curl \
         sudo \
         git \
+        postgresql-client \
         su-exec;
 
 RUN set -ex; \
