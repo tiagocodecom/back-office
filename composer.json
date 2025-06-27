@@ -49,6 +49,7 @@
         "drupal/recaptcha": "^3.4",
         "drupal/recaptcha_v3": "^2.0",
         "drupal/redirect": "^1.11",
+        "drupal/redis": "^1.9",
         "drupal/remove_reset_password": "^1.0",
         "drupal/rename_admin_paths": "^3.0",
         "drupal/rest_absolute_urls": "^2.0",

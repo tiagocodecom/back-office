@@ -75,6 +75,7 @@ module:
   recaptcha: 0
   recaptcha_v3: 0
   redirect: 0
+  redis: 0
   remove_reset_password: 0
   responsive_image: 0
   rest: 0

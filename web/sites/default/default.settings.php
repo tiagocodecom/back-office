@@ -907,3 +907,40 @@ $settings['s3fs.secret_key'] = getenv('DRUPAL_S3FS_SECRET_KEY');
 $config['s3fs.settings']['bucket'] = getenv("DRUPAL_S3FS_BUCKET");
 $config['s3fs.settings']['region'] = getenv("DRUPAL_S3FS_REGION");
 $settings['php_storage']['twig']['directory'] = '../storage/php';
+
+$settings['redis.connection']['interface'] = 'PhpRedis';
+$settings['redis.connection']['host'] = getenv('DRUPAL_REDIS_HOST');
+$settings['redis.connection']['port'] = getenv('DRUPAL_REDIS_PORT');;
+$settings['redis.connection']['password'] = getenv('DRUPAL_REDIS_PASSWORD');
+$settings['redis.connection']['persistent'] = TRUE;
+$settings['redis_invalidate_all_as_delete'] = TRUE;
+$settings['redis_compress_length'] = 100;
+
+$class_loader->addPsr4('Drupal\\redis\\', 'modules/contrib/redis/src');
+$settings['cache_prefix']['default'] = 'admintiagocode_';
+$settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
+$settings['container_yamls'][] = 'modules/contrib/redis/redis.services.yml';
+$settings['bootstrap_container_definition'] = [
+  'parameters' => [],
+  'services' => [
+    'redis.factory' => [
+      'class' => 'Drupal\redis\ClientFactory',
+    ],
+    'cache.backend.redis' => [
+      'class' => 'Drupal\redis\Cache\CacheBackendFactory',
+      'arguments' => ['@redis.factory', '@cache_tags_provider.container', '@serialization.phpserialize'],
+    ],
+    'cache.container' => [
+      'class' => '\Drupal\redis\Cache\PhpRedis',
+      'factory' => ['@cache.backend.redis', 'get'],
+      'arguments' => ['container'],
+    ],
+    'cache_tags_provider.container' => [
+      'class' => 'Drupal\redis\Cache\RedisCacheTagsChecksum',
+      'arguments' => ['@redis.factory'],
+    ],
+    'serialization.phpserialize' => [
+      'class' => 'Drupal\Component\Serialization\PhpSerialize',
+    ],
+  ],
+];

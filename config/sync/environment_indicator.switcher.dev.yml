@@ -6,6 +6,6 @@ machine: dev
 description: null
 name: DEV
 weight: -10
-url: 'https://local-tiagocode.com'
+url: 'https://local-admin.tiagocode.com'
 fg_color: '#232323'
 bg_color: '#96d35f'
