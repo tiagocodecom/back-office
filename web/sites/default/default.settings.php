@@ -908,6 +908,7 @@ $config['s3fs.settings']['bucket'] = getenv("DRUPAL_S3FS_BUCKET");
 $config['s3fs.settings']['region'] = getenv("DRUPAL_S3FS_REGION");
 $settings['php_storage']['twig']['directory'] = '../storage/php';
 
+
 $settings['redis.connection']['interface'] = 'PhpRedis';
 $settings['redis.connection']['host'] = getenv('DRUPAL_REDIS_HOST');
 $settings['redis.connection']['port'] = getenv('DRUPAL_REDIS_PORT');;
@@ -917,7 +918,8 @@ $settings['redis_invalidate_all_as_delete'] = TRUE;
 $settings['redis_compress_length'] = 100;
 
 $class_loader->addPsr4('Drupal\\redis\\', 'modules/contrib/redis/src');
-$settings['cache_prefix']['default'] = 'admintiagocode_';
+$settings['cache_prefix']['default'] = 'admintiagocode';
+$settings['cache']['default'] = 'cache.backend.redis';
 $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
 $settings['container_yamls'][] = 'modules/contrib/redis/redis.services.yml';
 $settings['bootstrap_container_definition'] = [
