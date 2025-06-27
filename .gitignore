@@ -44,8 +44,3 @@ npm-debug.log
 # Ignore MacOS and system-specific files
 .DS_Store
 Thumbs.db
-
-# Configs with secrets values
-config/sync/recaptcha_v3.settings.yml
-config/sync/recaptcha.settings.yml
-config/sync/smtp.settings.yml
