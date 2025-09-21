@@ -33,12 +33,12 @@
         "drupal/gin_toolbar": "^2.1",
         "drupal/jsonapi_extras": "^3.26",
         "drupal/jsonapi_image_styles": "^3.0",
-        "drupal/jsonapi_include": "^1.8",
+        "drupal/jsonapi_include": "^2.0",
         "drupal/jsonapi_links": "^1.0",
         "drupal/jsonapi_menu_items": "^1.2",
         "drupal/jsonapi_node_preview_tab": "^1.0",
         "drupal/login_security": "^2.0",
-        "drupal/menu_item_fields": "^1.11",
+        "drupal/menu_item_fields": "^2.0",
         "drupal/metatag": "^2.1",
         "drupal/openapi_jsonapi": "^3.0",
         "drupal/openapi_ui": "^1.0@RC",
@@ -62,6 +62,7 @@
         "drupal/subrequests": "^3.0",
         "drupal/tfa": "^1.9",
         "drush/drush": "^13.3",
+        "ifsnop/mysqldump-php": "^2.12",
         "mnsami/composer-custom-directory-installer": "^2.0"
     },
     "conflict": {
