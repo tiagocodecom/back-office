@@ -5,11 +5,11 @@ dependencies: {  }
 name: max_900x550
 label: "Max 900x550\t"
 effects:
-  5ab15b23-3aeb-4c79-8a9a-e9cf61002498:
-    uuid: 5ab15b23-3aeb-4c79-8a9a-e9cf61002498
-    id: image_scale_and_crop
-    weight: 1
+  f4a99fc3-60f5-43b1-a8e3-4f197be03cc3:
+    uuid: f4a99fc3-60f5-43b1-a8e3-4f197be03cc3
+    id: image_scale
+    weight: 2
     data:
       width: 900
       height: 550
-      anchor: center-center
+      upscale: true
