@@ -9,6 +9,7 @@ ignored_config_entities:
   - 'recaptcha.settings:site_key'
   - 'recaptcha_v3.settings: site_key'
   - 'recaptcha_v3.settings:secret_key'
+  - rest_api_authentication.settings
   - 'smtp.settings:smtp_from'
   - 'smtp.settings:smtp_fromname'
   - 'smtp.settings:smtp_password'
